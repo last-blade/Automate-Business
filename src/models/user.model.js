@@ -19,6 +19,11 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true,
+    },
+
+    accountType: {
+        type: String,
+        required: true,
     }
 }, {timestamps: true});
 
@@ -39,6 +44,11 @@ userSchema.methods.generateAccessToken = async function(){
 
     return accessToken;
 };
+
+userSchema.methods.generateRefreshToken = async function(){
+    const refreshToken = await jwt.sign(process.env.REFRESH_TOKEN_SECRET, {expiresIn: process.env.REFRESH_TOKEN_EXPIRY});
+    return refreshToken;
+}
 
 userSchema.methods.isPasswordCorrect = async function(password){
     return await bcrypt.compare(password, this.password);
