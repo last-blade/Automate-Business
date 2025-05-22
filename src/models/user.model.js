@@ -24,6 +24,11 @@ const userSchema = new Schema({
     accountType: {
         type: String,
         required: true,
+    },
+
+    refreshToken: {
+        type: String,
+        required: true,
     }
 }, {timestamps: true});
 
