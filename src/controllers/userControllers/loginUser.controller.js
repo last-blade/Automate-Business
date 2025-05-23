@@ -20,19 +20,19 @@ const loginUser = asyncHandler(async (request, response) => {
         throw new apiError(401, "Incorrect password")
     }
 
-    const loggedInUser = await User.findOne({email: email}).select("-password")
-
-    const accessToken = await generateAccessToken(loggedInUser._id);
+    const accessToken = await generateAccessToken(foundUser._id);
 
     if(!accessToken){
         throw new apiError(400, "Error in generating token")
     }
 
-    const refreshToken = await generateRefreshToken(loggedInUser._id);
+    const refreshToken = await generateRefreshToken(foundUser._id);
 
     if(!refreshToken){
         throw new apiError(400, "Error in generating token")
     }
+
+    const loggedInUser = await User.findOne({email: email}).select("-password -_id -__v -refreshToken")
 
     foundUser.refreshToken = refreshToken;
 
