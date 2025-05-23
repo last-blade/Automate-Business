@@ -22,10 +22,14 @@ app.use(express.static("public"));
 
 
 //importing Routes
-import userRoute from "./routes/user.routes.js"
+import userRoute from "./routes/user.routes.js";
+import taskRoute from "./routes/task.routes.js";
 
 
 //User Route
 app.use("/api/v1/user", userRoute);
+
+//Task Route
+app.use("/api/v1/task", taskRoute);
 
 export { app }
