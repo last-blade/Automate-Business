@@ -5,19 +5,19 @@ const loginUser = asyncHandler(async (request, response) => {
     const {email, password} = request.body;
 
     if([email, password].some((inputField) => inputField.trim === "")){
-        throw new apiError("All fields are required", 404)
+        throw new apiError(404, "All fields are required")
     }
 
     const foundUser = await User.findOne({email: email})
 
     if(!foundUser){
-        throw new apiError("User with this email does not exists")
+        throw new apiError(404, "User with this email does not exists")
     }
 
     const isValidPassword = await foundUser.isPasswordCorrect(password);
 
     if(!isValidPassword){
-        throw new apiError("Incorrect password", 401)
+        throw new apiError(401, "Incorrect password")
     }
 
     const loggedInUser = await User.findOne({email: email}).select("-password")
@@ -25,13 +25,13 @@ const loginUser = asyncHandler(async (request, response) => {
     const accessToken = await generateAccessToken(loggedInUser._id);
 
     if(!accessToken){
-        throw new apiError("Error in generating token", 400)
+        throw new apiError(400, "Error in generating token")
     }
 
     const refreshToken = await generateRefreshToken();
 
     if(!refreshToken){
-        throw new apiError("Error in generating token", 400)
+        throw new apiError(400, "Error in generating token")
     }
 
     foundUser.refreshToken = refreshToken;
