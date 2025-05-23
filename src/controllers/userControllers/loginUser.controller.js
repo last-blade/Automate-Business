@@ -28,7 +28,7 @@ const loginUser = asyncHandler(async (request, response) => {
         throw new apiError(400, "Error in generating token")
     }
 
-    const refreshToken = await generateRefreshToken();
+    const refreshToken = await generateRefreshToken(loggedInUser._id);
 
     if(!refreshToken){
         throw new apiError(400, "Error in generating token")
