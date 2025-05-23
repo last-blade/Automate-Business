@@ -10,7 +10,7 @@ const viewTask = asyncHandler(async (request, response) => {
     const foundTask = await Task.findById(taskId).select("-__v -_id");
 
     if(!foundTask){
-        return response.status(404, {}, "Task not found, task may be deleted")
+        throw new apiError(404, "Task not found, task may be deleted")
     }
 
     return response.status(200)
