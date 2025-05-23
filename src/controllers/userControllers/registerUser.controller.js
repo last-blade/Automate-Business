@@ -1,4 +1,4 @@
-import { apiError, asyncHandler, User } from "../allImports.js";
+import { apiError, apiResponse, asyncHandler, User } from "../allImports.js";
 
 const registerUser = asyncHandler(async (request, response) => {
     const {email, fullname, accountType, password, confirmPassword} = request.body;
@@ -21,16 +21,19 @@ const registerUser = asyncHandler(async (request, response) => {
         email,
         fullname,
         password,
+        accountType,
     });
 
-    const newUserFound = await User.findById(newUser._id).select("-password -refreshToken");
+    const newUserFound = await User.findById(newUser._id).select("-password -_id -__v");
 
     if(!newUserFound){
         throw new apiError(500, "Something went wrong while registration")
     }
 
     return response.status(201)
-    .json(201, newUserFound, "User registered successfully")
+    .json(
+        new apiResponse(201, newUserFound, "User registered successfully")
+    )
 
 });
 
