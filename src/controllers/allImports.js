@@ -6,5 +6,15 @@ import { generateAccessToken } from "../utils/generateAccessToken.js";
 import { generateRefreshToken } from "../utils/generateRefreshToken.js";
 import { accessTokenOptions } from "../constants.js";
 import { refreshTokenOptions } from "../constants.js";
+import { Task } from "../models/task.model.js";
 
-export { User, apiError, apiResponse, asyncHandler, generateAccessToken, generateRefreshToken, accessTokenOptions, refreshTokenOptions }
+export { User, 
+    apiError, 
+    apiResponse, 
+    asyncHandler, 
+    generateAccessToken, 
+    generateRefreshToken, 
+    accessTokenOptions, 
+    refreshTokenOptions, 
+    Task 
+}
