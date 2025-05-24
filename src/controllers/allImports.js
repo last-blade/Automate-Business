@@ -7,6 +7,7 @@ import { generateRefreshToken } from "../utils/generateRefreshToken.js";
 import { accessTokenOptions } from "../constants.js";
 import { refreshTokenOptions } from "../constants.js";
 import { Task } from "../models/task.model.js";
+import { Comment } from "../models/comment.model.js";
 
 export { User, 
     apiError, 
@@ -16,5 +17,6 @@ export { User,
     generateRefreshToken, 
     accessTokenOptions, 
     refreshTokenOptions, 
-    Task 
+    Task,
+    Comment,
 }
