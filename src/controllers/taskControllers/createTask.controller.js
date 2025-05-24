@@ -4,7 +4,7 @@ const createTask = asyncHandler(async (request, response) => {
     const {
         taskTitle,
         taskDescription,
-        taskAssignee,
+        taskAssignedTo,
         taskCategory,
         taskDueDate,
         taskPriority,
@@ -12,7 +12,7 @@ const createTask = asyncHandler(async (request, response) => {
     } = request.body;
 
     if (
-        [taskTitle, taskDescription, taskAssignee, taskCategory, taskDueDate, taskPriority]
+        [taskTitle, taskDescription, taskAssignedTo, taskCategory, taskDueDate, taskPriority]
             .some(field => typeof field === "string" && field.trim() === "")
     ) {
         throw new apiError(400, "All required fields must be non-empty strings");
@@ -27,7 +27,7 @@ const createTask = asyncHandler(async (request, response) => {
     const taskData = {
         taskTitle,
         taskDescription,
-        taskAssignee,
+        taskAssignedTo,
         taskCategory,
         taskDueDate,
         taskPriority,
