@@ -6,6 +6,7 @@ import { fetchUsersAllTasks } from "../controllers/taskControllers/fetchUsersAll
 import { deleteTask } from "../controllers/taskControllers/deleteTask.controller.js";
 import { changeTaskStatus } from "../controllers/taskControllers/changeTaskStatus.controller.js";
 import { fetchCategorizedTasks } from "../controllers/taskControllers/fetchCategorizedTasks.controller.js";
+import { fetchCategorizedTasksCounting } from "../controllers/taskControllers/fetchCategorizedTasksCounting.controller.js";
 
 const router = Router();
 
@@ -20,4 +21,5 @@ router.route("/change-task-status/:taskId").post(authMiddleware, changeTaskStatu
 
 router.route("/fetch-tasks").get(authMiddleware, fetchCategorizedTasks);
 
+router.route("/categorywise-task-counting").get(authMiddleware, fetchCategorizedTasksCounting);
 export default router;
