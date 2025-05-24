@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { apiError, apiResponse, asyncHandler, Task } from "../allImports.js";
 
 const createTask = asyncHandler(async (request, response) => {
@@ -16,6 +17,10 @@ const createTask = asyncHandler(async (request, response) => {
             .some(field => typeof field === "string" && field.trim() === "")
     ) {
         throw new apiError(400, "All required fields must be non-empty strings");
+    }
+
+    if (!mongoose.Types.ObjectId.isValid(taskAssignedTo)) {
+        throw new apiError(400, "taskAssignedTo must be a valid MongoDB ObjectId");
     }
 
     if (taskFrequency !== undefined && taskFrequency !== null) {
