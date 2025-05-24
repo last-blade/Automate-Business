@@ -10,7 +10,10 @@ const deleteTask = asyncHandler(async (request, response) => {
     const foundTask = await Task.findById(taskId);
 
     if(!foundTask){
-        return response.status(404, {}, "Task not found, task may be deleted")
+        return response.status(404)
+        .json(
+            new apiResponse(404, {}, "Task not found, task may be deleted")
+        )
     }
 
     await Task.findByIdAndDelete(taskId);
