@@ -29,6 +29,7 @@ const fetchTotalComments = asyncHandler(async (request, response) => {
         },
     })
     .populate("commentedBy", "fullname email").select("-_id -__v")
+    .populate("commentedTask", "taskTitle")
 
     return response.status(200)
     .json(
