@@ -21,7 +21,8 @@ const createComment = asyncHandler(async (request, response) => {
     const createdComment = await Comment.create({
         comment,
         commentedTask: taskId,
-        commentedBy: request.user?.id
+        commentedBy: request.user?.id,
+        thisTaskAssignedTo: foundTask.taskAssignedTo,
     });
 
     const foundComment = await Comment.findById(createdComment._id).select("-__v -_id");
