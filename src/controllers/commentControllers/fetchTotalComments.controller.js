@@ -18,33 +18,21 @@ const fetchTotalComments = asyncHandler(async (request, response) => {
         )
     }
 
-    const totalComments = await Comment.aggregate([
-        {
-            $match: {
-                commentedTask: new mongoose.Types.ObjectId(taskId)
-            }
-        },
+    const taskAssignedTo = foundTask.taskAssignedTo;
 
-        {
-            $match: {
-                commentedBy: new mongoose.Types.ObjectId(request.user?.id)
-            }
-        },
+    const taskAssignedBy = foundTask.taskCreatedBy;
 
-        // {
-        //     $facet: {
-        //         allComments: [
-        //             {
-        //                 $
-        //             }
-        //         ]
-        //     }
-        // }
-    ]);
+    const comments = await Comment.find({
+        commentedTask: taskId,
+        commentedBy: {
+            $in: [taskAssignedTo, taskAssignedBy],
+        },
+    })
+    .populate("commentedBy", "fullname email").select("-_id -__v")
 
     return response.status(200)
     .json(
-        new apiResponse(200, totalComments, `All comments related to task ${taskId} fetched`)
+        new apiResponse(200, comments, `All comments related to task ${taskId} fetched`)
     )
 });
 
