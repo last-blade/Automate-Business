@@ -8,6 +8,7 @@ import { accessTokenOptions } from "../constants.js";
 import { refreshTokenOptions } from "../constants.js";
 import { Task } from "../models/task.model.js";
 import { Comment } from "../models/comment.model.js";
+import { NewMember } from "../models/newTeamMember.model.js";
 
 export { User, 
     apiError, 
@@ -19,4 +20,5 @@ export { User,
     refreshTokenOptions, 
     Task,
     Comment,
+    NewMember,
 }
