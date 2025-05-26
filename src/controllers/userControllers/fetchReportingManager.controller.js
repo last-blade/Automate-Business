@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import { apiResponse, asyncHandler, NewMember } from "../allImports.js";
 
 const fetchReportingManager = asyncHandler(async (request, response) => {
