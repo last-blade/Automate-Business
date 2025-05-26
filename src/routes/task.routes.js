@@ -8,6 +8,7 @@ import { changeTaskStatus } from "../controllers/taskControllers/changeTaskStatu
 import { fetchCategorizedTasks } from "../controllers/taskControllers/fetchCategorizedTasks.controller.js";
 import { fetchCategorizedTasksCounting } from "../controllers/taskControllers/fetchCategorizedTasksCounting.controller.js";
 import { editTask } from "../controllers/taskControllers/editTask.controller.js";
+import { searchTask } from "../controllers/taskControllers/searchTask.controller.js";
 
 const router = Router();
 
@@ -23,6 +24,7 @@ router.route("/view-task/:taskId").get(authMiddleware, viewTask);
 router.route("/fetch-all-tasks").get(authMiddleware, fetchUsersAllTasks);
 router.route("/fetch-tasks").get(authMiddleware, fetchCategorizedTasks);
 router.route("/categorywise-task-counting").get(authMiddleware, fetchCategorizedTasksCounting);
+router.route("/search-task").get(authMiddleware, searchTask);
 
 //PUT
 router.route("/edit-task/:taskId").put(authMiddleware, editTask);
