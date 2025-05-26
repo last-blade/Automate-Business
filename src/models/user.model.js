@@ -26,6 +26,15 @@ const userSchema = new Schema({
         required: true,
     },
 
+    whatsappNumber: {
+        type: Number,
+    },
+
+    reportingManager: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
+
     refreshToken: {
         type: String,
     }
