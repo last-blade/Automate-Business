@@ -30,10 +30,10 @@ const userSchema = new Schema({
         type: Number,
     },
 
-    reportingManager: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
-    },
+    // reportingManager: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "User"
+    // },
 
     refreshToken: {
         type: String,

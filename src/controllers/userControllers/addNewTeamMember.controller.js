@@ -1,9 +1,9 @@
 import { apiError, apiResponse, asyncHandler, NewMember, User } from "../allImports.js";
 
 const addNewTeamMember = asyncHandler(async (request, response) => {
-    const {fullname, email, whatsappNumber, accountType, reportingManager, password} = request.body;
+    const {fullname, email, whatsappNumber, accountType, password} = request.body;
 
-    if([fullname, email, whatsappNumber, accountType, reportingManager, password].some((inputField) => inputField === "")){
+    if([fullname, email, whatsappNumber, accountType, password].some((inputField) => inputField === "")){
         throw new apiError(404, "All fields are required")
     }
 
@@ -18,7 +18,7 @@ const addNewTeamMember = asyncHandler(async (request, response) => {
         email, 
         whatsappNumber, 
         accountType, 
-        reportingManager, 
+        // reportingManager, 
         password,
     });
 
