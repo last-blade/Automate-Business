@@ -21,7 +21,7 @@ const reAssignAllTasks = asyncHandler(async (request, response) => {
 
     const oldTeamMemberId = oldTeamMemberToWhichTaskRemove._id;
 
-    const foundTeamMember = await Task.updateMany(
+    await Task.updateMany(
         {
             taskAssignedTo: oldTeamMemberId
         },
