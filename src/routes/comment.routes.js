@@ -5,8 +5,12 @@ import { fetchTotalComments } from "../controllers/commentControllers/fetchTotal
 
 const router = Router();
 
+
+//POST
 router.route("/create-comment/:taskId").post(authMiddleware, createComment);
 
+
+//GET
 router.route("/fetch-comments/:taskId").get(authMiddleware, fetchTotalComments);
 
 export default router;
