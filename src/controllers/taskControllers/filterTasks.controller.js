@@ -36,8 +36,6 @@ const filterTasks = asyncHandler(async (request, response) => {
 
     const filteredTasks = await Task.find(filter);
 
-    console.log(filter)
-
     return response.status(200).json(
         new apiResponse(200, {filteredTasks, totalTasks: filteredTasks.length}, "Filtered tasks fetched successfully")
     );
