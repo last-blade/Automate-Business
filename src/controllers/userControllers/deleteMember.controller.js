@@ -1,4 +1,4 @@
-import { apiError, apiResponse, asyncHandler, NewMember, User } from "../allImports.js";
+import { apiError, apiResponse, asyncHandler, NewMember, Task, User } from "../allImports.js";
 
 const deleteMember = asyncHandler(async (request, response) => {
     const {memberId} = request?.params;
@@ -22,6 +22,10 @@ const deleteMember = asyncHandler(async (request, response) => {
     });
 
     await User.findByIdAndDelete(memberId);
+
+    await Task.deleteMany({
+        taskAssignedTo: memberId,
+    });
 
     return response.status(200)
     .json(
