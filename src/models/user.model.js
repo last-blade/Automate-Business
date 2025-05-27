@@ -23,7 +23,7 @@ const userSchema = new Schema({
 
     accountType: {
         type: String,
-        enum: ["Admin", "Manager", "Team Member"],
+        enum: ["Admin", "Manager", "Team Member", "Worker"],
         default: "Admin"
     },
 

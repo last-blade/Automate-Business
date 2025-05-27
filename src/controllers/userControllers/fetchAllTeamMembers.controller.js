@@ -8,7 +8,7 @@ const fetchAllTeamMembers = asyncHandler(async (request, response) => {
         })
         .populate({
         path: 'newMember',
-        match: { accountType: { $in: ['Admin', 'Manager', 'Team Member'] } },
+        match: { accountType: { $in: ['Admin', 'Manager', 'Team Member', 'Worker'] } },
         select: '-password -__v -reportingManager -createdAt -updatedAt'
     }).select("-newMemberCreatedBy -_id -__v -password");
 
