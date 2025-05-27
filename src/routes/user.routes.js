@@ -10,15 +10,18 @@ import { fetchReportingManager } from "../controllers/userControllers/fetchRepor
 
 const router = Router();
 
+//POST
 router.route("/register").post(registerUser);
 router.route("/login").post(loginUser);
 router.route("/change-password").post(authMiddleware, changePassword);
 router.route("/logout").post(authMiddleware, logoutUser);
-
+router.route("/refresh-access-token").post(refreshAccessToken);
 router.route("/add-new-member").post(authMiddleware, addNewTeamMember);
 
+
+//GET
 router.route("/fetch-reporting-managers").get(authMiddleware, fetchReportingManager);
 
-router.route("/refresh-access-token").post(refreshAccessToken);
+
 
 export default router;
