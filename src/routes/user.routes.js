@@ -8,6 +8,7 @@ import { refreshAccessToken } from "../controllers/userControllers/refreshAccess
 import { addNewTeamMember } from "../controllers/userControllers/addNewTeamMember.controller.js";
 import { fetchReportingManager } from "../controllers/userControllers/fetchReportingManager.controller.js";
 import { deleteMember } from "../controllers/userControllers/deleteMember.controller.js";
+import { fetchAllTeamMembers } from "../controllers/userControllers/fetchAllTeamMembers.controller.js";
 
 const router = Router();
 
@@ -22,7 +23,7 @@ router.route("/add-new-member").post(authMiddleware, addNewTeamMember);
 
 //GET
 router.route("/fetch-reporting-managers").get(authMiddleware, fetchReportingManager);
-
+router.route("/fetch-all-team-members").get(authMiddleware, fetchAllTeamMembers);
 
 //DELETE
 router.route("/delete-member/:memberId").delete(authMiddleware, deleteMember);
