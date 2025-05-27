@@ -23,7 +23,8 @@ const userSchema = new Schema({
 
     accountType: {
         type: String,
-        required: true,
+        enum: ["Admin", "Manager", "Team Member"],
+        default: "Admin"
     },
 
     whatsappNumber: {
