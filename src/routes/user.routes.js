@@ -7,6 +7,7 @@ import { logoutUser } from "../controllers/userControllers/logoutUser.controller
 import { refreshAccessToken } from "../controllers/userControllers/refreshAccessToken.controller.js";
 import { addNewTeamMember } from "../controllers/userControllers/addNewTeamMember.controller.js";
 import { fetchReportingManager } from "../controllers/userControllers/fetchReportingManager.controller.js";
+import { deleteMember } from "../controllers/userControllers/deleteMember.controller.js";
 
 const router = Router();
 
@@ -23,5 +24,7 @@ router.route("/add-new-member").post(authMiddleware, addNewTeamMember);
 router.route("/fetch-reporting-managers").get(authMiddleware, fetchReportingManager);
 
 
+//DELETE
+router.route("/delete-member/:memberId").delete(authMiddleware, deleteMember);
 
 export default router;
