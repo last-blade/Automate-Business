@@ -29,6 +29,7 @@ const userSchema = new Schema({
 
     whatsappNumber: {
         type: Number,
+        required: true,
     },
 
     // reportingManager: {
