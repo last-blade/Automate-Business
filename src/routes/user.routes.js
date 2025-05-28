@@ -9,6 +9,8 @@ import { addNewTeamMember } from "../controllers/userControllers/addNewTeamMembe
 import { fetchReportingManager } from "../controllers/userControllers/fetchReportingManager.controller.js";
 import { deleteMember } from "../controllers/userControllers/deleteMember.controller.js";
 import { fetchAllTeamMembers } from "../controllers/userControllers/fetchAllTeamMembers.controller.js";
+import { sendOTP } from "../controllers/userControllers/sendOTP.controller.js";
+import { verifyOTP } from "../controllers/userControllers/verifyOTP.controller.js";
 
 const router = Router();
 
@@ -27,5 +29,9 @@ router.route("/fetch-all-team-members").get(authMiddleware, fetchAllTeamMembers)
 
 //DELETE
 router.route("/delete-member/:memberId").delete(authMiddleware, deleteMember);
+
+//OTP
+router.route("/send-otp").post(sendOTP);
+router.route("/verify-otp").post(verifyOTP);
 
 export default router;
