@@ -4,7 +4,7 @@ const loginUser = asyncHandler(async (request, response) => {
 
     const {email, password} = request.body;
 
-    if([email, password].some((inputField) => inputField.trim === "")){
+    if([email, password].some(inputField => inputField === undefined || inputField.toString().trim() === "")){
         throw new apiError(404, "All fields are required")
     }
 
