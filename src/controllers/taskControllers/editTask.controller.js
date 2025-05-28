@@ -26,9 +26,9 @@ const editTask = asyncHandler(async (request, response) => {
 
     if (
         [taskTitle, taskDescription, taskAssignedTo, taskCategory, taskDueDate, taskPriority]
-            .some(field => typeof field === "string" && field.trim() === "")
+            .some(inputField =>inputField === undefined || inputField.toString().trim() === "")
     ) {
-        throw new apiError(400, "All required fields must be non-empty strings");
+        throw new apiError(400, "All required fields must be non-empty");
     }
 
     if (!mongoose.Types.ObjectId.isValid(taskAssignedTo)) {
