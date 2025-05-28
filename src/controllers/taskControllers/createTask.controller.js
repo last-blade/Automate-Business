@@ -14,7 +14,7 @@ const createTask = asyncHandler(async (request, response) => {
 
     if (
         [taskTitle, taskDescription, taskAssignedTo, taskCategory, taskDueDate, taskPriority]
-            .some(field => typeof field === "string" && field.trim() === "")
+            .some(field => field === undefined || field.toString().trim() === "")
     ) {
         throw new apiError(400, "All required fields must be non-empty strings");
     }
