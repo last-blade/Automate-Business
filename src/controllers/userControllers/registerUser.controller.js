@@ -2,12 +2,13 @@ import { apiError, apiResponse, asyncHandler, User } from "../allImports.js";
 
 const registerUser = asyncHandler(async (request, response) => {
     let {email, fullname, whatsappNumber, password, confirmPassword} = request.body;
-    
+
     whatsappNumber = parseInt(whatsappNumber);
 
-    if([email, fullname, whatsappNumber, password, confirmPassword].some((inputField) => inputField.trim === "")){
+    if ([email, fullname, whatsappNumber, password, confirmPassword].some(inputField =>inputField === undefined || inputField.toString().trim() === "")) {
         throw new apiError(404, "All fields are required");
     }
+
 
     if(password !== confirmPassword){
         throw new apiError(400, "Passwords don't match");
