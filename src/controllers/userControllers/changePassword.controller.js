@@ -3,7 +3,7 @@ import { apiError, apiResponse, asyncHandler, User } from "../allImports.js";
 const changePassword = asyncHandler(async (request, response) => {
     const {email, incomingPassword} = request.body;
 
-    if([email, incomingPassword].some((inputField) => inputField.trim === "")){
+    if([email, incomingPassword].some(inputField => inputField === undefined || inputField.toString().trim() === "")){
         throw new apiError(404, "All fields are required")
     }
 
