@@ -1,4 +1,5 @@
 import { OTP } from "../models/otp.model.js";
+import { apiError } from "./apiError.js";
 
 
 const verifyOtpHelper = async (incomingEmail, incomingOTP) => {
@@ -15,7 +16,7 @@ const verifyOtpHelper = async (incomingEmail, incomingOTP) => {
         throw new apiError(400, "Incorrect OTP.")
     }
 
-    await OTP.findOneAndDelete({ incomingEmail });
+    await OTP.findOneAndDelete({ email: incomingEmail });
 
     return true;
 }
