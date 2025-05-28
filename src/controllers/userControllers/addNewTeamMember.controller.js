@@ -3,7 +3,7 @@ import { apiError, apiResponse, asyncHandler, NewMember, User } from "../allImpo
 const addNewTeamMember = asyncHandler(async (request, response) => {
     const {fullname, email, whatsappNumber, accountType, password} = request.body;
 
-    if([fullname, email, whatsappNumber, accountType, password].some((inputField) => inputField === "")){
+    if([fullname, email, whatsappNumber, accountType, password].some(inputField => inputField === undefined || inputField.toString().trim() === "")){
         throw new apiError(404, "All fields are required")
     }
 
