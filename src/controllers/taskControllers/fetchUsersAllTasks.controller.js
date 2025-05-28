@@ -5,6 +5,10 @@ const fetchUsersAllTasks = asyncHandler(async (request, response) => {
 
     const userId = request.user?.id;
 
+    const limit = parseInt(request.query.limit) || 10;
+    const page = parseInt(request.query.page) || 1;
+    const skip = (page - 1) * limit;
+
     const allTasks = await Task.aggregate([
         {
             $match: {
@@ -13,8 +17,16 @@ const fetchUsersAllTasks = asyncHandler(async (request, response) => {
         },
 
         {
+            $skip: skip
+        },
+
+        {
+            $limit: limit
+        },
+
+        {
             $project: {__v: 0, _id: 0}
-        }
+        },
     ]);
 
     if(allTasks.length === 0){
