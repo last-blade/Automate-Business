@@ -38,7 +38,7 @@ const taskSchema = new Schema({
     taskFrequency: {
         type: {
             type: String,
-            enum: ["daily", "weekly", "monthly", "yearly", "periodically"],
+            enum: ["one-time", "daily", "weekly", "monthly", "yearly", "periodically"],
         },
         details: {
             daysOfWeek: [
