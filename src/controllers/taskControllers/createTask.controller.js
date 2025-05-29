@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-import { apiError, apiResponse, asyncHandler, Task } from "../allImports.js";
+import { apiError, apiResponse, asyncHandler, Task, User } from "../allImports.js";
+import taskCreatedEmail from "../../emails/taskEmails/taskCreatedEmail.js";
 
 const createTask = asyncHandler(async (request, response) => {
     const {
@@ -51,6 +52,10 @@ const createTask = asyncHandler(async (request, response) => {
     if (!createdTask) {
         throw new apiError(500, "Something went wrong while assigning task");
     }
+
+    const assigneeUser = await User.findById(taskAssignedTo);
+
+    await taskCreatedEmail({taskTitle, assigneeName: assigneeUser.fullname, assigneeEmail: assigneeUser.email, dueDate: taskDueDate})
 
     return response.status(201)
     .json(
