@@ -12,6 +12,7 @@ import { searchTask } from "../controllers/taskControllers/searchTask.controller
 import { reAssignAllTasks } from "../controllers/taskControllers/reAssignAllTasks.controller.js";
 import { filterTasks } from "../controllers/taskControllers/filterTasks.controller.js";
 import { fetchTasksAssignedToMe } from "../controllers/taskControllers/fetchTasksAssignedToMe.controller.js";
+import { fetchDelegateAndAssignedToMeTasks } from "../controllers/taskControllers/fetchDelegateAndAssignedToMeTasks.controller.js";
 
 const router = Router();
 
@@ -30,6 +31,7 @@ router.route("/categorywise-task-counting").get(authMiddleware, fetchCategorized
 router.route("/search-task").get(authMiddleware, searchTask);
 router.route("/filter-tasks").get(authMiddleware, filterTasks);
 router.route("/assigned-to-me").get(authMiddleware, fetchTasksAssignedToMe);
+router.route("/all-tasks").get(authMiddleware, fetchDelegateAndAssignedToMeTasks);
 
 //PUT
 router.route("/edit-task/:taskId").put(authMiddleware, editTask);
