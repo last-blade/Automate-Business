@@ -22,6 +22,8 @@ const fetchTotalComments = asyncHandler(async (request, response) => {
 
     const taskAssignedBy = foundTask.taskCreatedBy;
 
+    console.log(taskAssignedTo, " ::: ", taskAssignedBy)
+    
     const comments = await Comment.find({
         commentedTask: taskId,
         commentedBy: {
@@ -33,7 +35,7 @@ const fetchTotalComments = asyncHandler(async (request, response) => {
 
     return response.status(200)
     .json(
-        new apiResponse(200, comments, `All comments related to task ${taskId} fetched`)
+        new apiResponse(200, comments, `All comments related to task '${foundTask.taskTitle}' fetched`)
     )
 });
 
