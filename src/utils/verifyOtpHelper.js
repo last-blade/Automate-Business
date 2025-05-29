@@ -5,7 +5,7 @@ import { apiError } from "./apiError.js";
 const verifyOtpHelper = async (incomingEmail, incomingOTP) => {
 
     const foundUser = await OTP.findOne({email: incomingEmail});
-
+console.log("cookie user", foundUser)
     if(!foundUser){
         throw new apiError(400, "OTP expired, send OTP again.")
     }
