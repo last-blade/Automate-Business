@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { apiResponse, asyncHandler, Task } from "../allImports.js";
 
-const fetchMyTasksAssignedByLeader = asyncHandler(async (request, response) => {
+const fetchTasksAssignedToMe = asyncHandler(async (request, response) => {
 
     const userId = request.user?.id;
 
@@ -49,4 +49,4 @@ const fetchMyTasksAssignedByLeader = asyncHandler(async (request, response) => {
 
 });
 
-export {fetchMyTasksAssignedByLeader};
+export {fetchTasksAssignedToMe};
