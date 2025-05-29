@@ -47,15 +47,15 @@ const createTask = asyncHandler(async (request, response) => {
 
     const newTask = await Task.create(taskData);
 
-    const createdTask = await Task.findById(newTask._id);
+    const createdTask = await Task.findById(newTask._id).populate("taskAssignedTo", "fullname email taskDueDate");
 
     if (!createdTask) {
         throw new apiError(500, "Something went wrong while assigning task");
     }
 
-    const assigneeUser = await User.findById(taskAssignedTo);
+    const taskAssignedToUser = createdTask.taskAssignedTo;
 
-    await taskCreatedEmail({taskTitle, assigneeName: assigneeUser.fullname, assigneeEmail: assigneeUser.email, dueDate: taskDueDate})
+    await taskCreatedEmail({taskTitle, assigneeName: taskAssignedToUser.fullname, assigneeEmail: taskAssignedToUser.email, dueDate: taskDueDate})
 
     return response.status(201)
     .json(
