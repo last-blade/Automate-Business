@@ -9,6 +9,7 @@ import { refreshTokenOptions } from "../constants.js";
 import { Task } from "../models/task.model.js";
 import { Comment } from "../models/comment.model.js";
 import { NewMember } from "../models/newTeamMember.model.js";
+import { sendMail } from "../utils/sendEmail.js";
 
 export { User, 
     apiError, 
@@ -21,4 +22,5 @@ export { User,
     Task,
     Comment,
     NewMember,
+    sendMail,
 }
