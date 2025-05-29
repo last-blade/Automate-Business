@@ -4,10 +4,15 @@ import { apiError, apiResponse, asyncHandler } from "../allImports.js";
 const verifyOTP = asyncHandler(async (request, response) => {
     const {incomingOTP} = request.body;
     const email = request.cookies?.Email;
-    if(!email){
-        throw new apiError(404, "No email found from cookies")
+
+    if(!incomingOTP){
+        throw new apiError(404, "OTP not found!")
     }
-console.log("cookie email: ", email)
+
+    if(!email){
+        throw new apiError(404, "Email not found!")
+    }
+
     if(!incomingOTP){
         throw new apiError(400, "OTP is required.")
     }
