@@ -12,6 +12,7 @@ import { fetchAllTeamMembers } from "../controllers/userControllers/fetchAllTeam
 import { sendOTP } from "../controllers/userControllers/sendOTP.controller.js";
 import { verifyOTP } from "../controllers/userControllers/verifyOTP.controller.js";
 import { fetchTeamMemberDetails } from "../controllers/userControllers/fetchTeamMemberDetails.controller.js";
+import { searchTeamMember } from "../controllers/userControllers/searchTeamMember.controller.js";
 
 const router = Router();
 
@@ -28,6 +29,7 @@ router.route("/add-new-member").post(authMiddleware, addNewTeamMember);
 router.route("/fetch-reporting-managers").get(authMiddleware, fetchReportingManager);
 router.route("/fetch-all-team-members").get(authMiddleware, fetchAllTeamMembers);
 router.route("/team-member/:userId").get(authMiddleware, fetchTeamMemberDetails);
+router.route("/search-team-member").get(authMiddleware, searchTeamMember);
 
 //DELETE
 router.route("/delete-member/:memberId").delete(authMiddleware, deleteMember);
