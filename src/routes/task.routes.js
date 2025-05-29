@@ -25,7 +25,7 @@ router.route("/delete-task/:taskId").delete(authMiddleware, deleteTask);
 //GET
 router.route("/view-task/:taskId").get(authMiddleware, viewTask);
 router.route("/delegated-tasks").get(authMiddleware, fetchDelegatedTasks);
-router.route("/fetch-cat-tasks").get(authMiddleware, fetchCategorizedTasks);
+router.route("/categorized-tasks").get(authMiddleware, fetchCategorizedTasks);
 router.route("/categorywise-task-counting").get(authMiddleware, fetchCategorizedTasksCounting);
 router.route("/search-task").get(authMiddleware, searchTask);
 router.route("/filter-tasks").get(authMiddleware, filterTasks);
