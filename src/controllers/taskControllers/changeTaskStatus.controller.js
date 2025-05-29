@@ -1,3 +1,4 @@
+import changeTaskStatusEmail from "../../emails/taskEmails/changeTaskStatusEmail.js";
 import { apiError, apiResponse, asyncHandler, Task } from "../allImports.js";
 
 const changeTaskStatus = asyncHandler(async (request, response) => {
@@ -22,11 +23,20 @@ const changeTaskStatus = asyncHandler(async (request, response) => {
         $set: {
             taskStatus: status.status
         }
-    }, {new: true}).select("-__v -_id");
+    }, {new: true}).select("-__v -_id").populate("taskCreatedBy", "fullname email");
 
     if(!updatedTask){
         throw new apiError(500, "Something went wrong while changing the status of the task")
     }
+
+    const {taskTitle, taskCreatedBy, taskStatus} = updatedTask;
+
+    await changeTaskStatusEmail({
+        taskTitle,
+        assigneeName: taskCreatedBy.fullname,
+        assigneeEmail: taskCreatedBy.email,
+        newStatus: taskStatus
+    });
 
     return response.status(200)
     .json(
