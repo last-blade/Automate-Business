@@ -7,7 +7,7 @@ const viewTask = asyncHandler(async (request, response) => {
         throw new apiError(404, "Task id not found!")
     }
 
-    const foundTask = await Task.findById(taskId).select("-__v -_id");
+    const foundTask = await Task.findById(taskId).select("-__v -_id").populate("taskAssignedTo taskCreatedBy", "fullname");
 
     if(!foundTask){
         throw new apiError(404, "Task not found, task may be deleted")
