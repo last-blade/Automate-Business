@@ -1,4 +1,4 @@
-import { apiError, apiResponse, asyncHandler, Comment, Task } from "../allImports.js";
+import { Activity, apiError, apiResponse, asyncHandler, Comment, Task } from "../allImports.js";
 
 const createComment = asyncHandler(async (request, response) => {
     const {taskId} = request?.params;
@@ -9,7 +9,7 @@ const createComment = asyncHandler(async (request, response) => {
         throw new apiError(404, "Task id not found!")
     }
 
-    const foundTask = await Task.findById(taskId);
+    const foundTask = await Task.findById(taskId).populate("taskAssignedTo", "_id fullname");
 
     if(!foundTask){
         return response.status(404)
@@ -30,6 +30,13 @@ const createComment = asyncHandler(async (request, response) => {
     if(!foundComment){
         throw new apiError(500, "Something went wrong while commenting!")
     }
+
+    await Activity.create({
+        messageType: "comment_added",
+        message: `${request.user?.fullname} commented on: ${foundTask.taskTitle}: ${foundComment.comment}`,
+        user: foundTask.taskAssignedTo._id,
+        task: foundTask._id,
+    });
 
     return response.status(201)
     .json(
