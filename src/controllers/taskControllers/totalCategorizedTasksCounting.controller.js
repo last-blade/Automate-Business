@@ -32,11 +32,16 @@ const totalCategorizedTasksCounting = asyncHandler(async (request, response) => 
         }
     ]);
 
-    const formatCounts = (arr) =>
-        arr.reduce((acc, curr) => {
-        acc[curr._id] = curr.count;
-        return acc;
-    }, {});
+    const formatCounts = (arr) => {
+        const counts = arr.reduce((acc, curr) => {
+            acc[curr._id] = curr.count;
+            return acc;
+        }, {});
+        const totalCount = arr.reduce((accumulator, currentValue) => {
+            return accumulator + currentValue.count
+        }, 0);
+        return { counts, totalCount };
+    };
 
     const result = {
         tasksCreatedByMe: formatCounts(createdByMe),
