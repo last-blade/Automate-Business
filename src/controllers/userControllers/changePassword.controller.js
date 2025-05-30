@@ -1,3 +1,4 @@
+import passwordChangeEmail from "../../emails/userEmails/passwordChangeEmail.js";
 import { apiError, apiResponse, asyncHandler, User } from "../allImports.js";
 
 const changePassword = asyncHandler(async (request, response) => {
@@ -16,6 +17,9 @@ const changePassword = asyncHandler(async (request, response) => {
     foundUser.password = incomingPassword;
     
     foundUser.save({validateBeforeSave: false});
+
+    // Sending confirmation email
+    await passwordChangeEmail({ email, fullname: foundUser.fullname });
 
     return response.status(200)
     .json(
