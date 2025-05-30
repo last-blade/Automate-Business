@@ -32,6 +32,26 @@ const userSchema = new Schema({
         required: true,
     },
 
+    location: {
+        type: String,
+        default: "NA",
+    },
+    
+    bio: {
+        type: String,
+         default: "NA",
+    },
+
+    designation: {
+        type: String,
+         default: "NA",
+    },
+
+    department: {
+        type: String,
+         default: "NA",
+    },
+
     // reportingManager: {
     //     type: mongoose.Schema.Types.ObjectId,
     //     ref: "User"
