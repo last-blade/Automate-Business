@@ -16,6 +16,7 @@ import { searchTeamMember } from "../controllers/userControllers/searchTeamMembe
 import { changeWhatsappNumber } from "../controllers/userControllers/changeWhatsappNumber.controller.js";
 import { deleteMyAccount } from "../controllers/userControllers/deleteMyAccount.controller.js";
 import { editProfile } from "../controllers/userControllers/editProfile.controller.js";
+import { getUserActivities } from "../controllers/userControllers/getUserActivities.controller.js";
 
 const router = Router();
 
@@ -33,6 +34,7 @@ router.route("/fetch-reporting-managers").get(authMiddleware, fetchReportingMana
 router.route("/fetch-all-team-members").get(authMiddleware, fetchAllTeamMembers);
 router.route("/team-member/:userId").get(authMiddleware, fetchTeamMemberDetails);
 router.route("/search-team-member").get(authMiddleware, searchTeamMember);
+router.route("/activities").get(authMiddleware, getUserActivities);
 
 //DELETE
 router.route("/delete-member/:memberId").delete(authMiddleware, deleteMember);
