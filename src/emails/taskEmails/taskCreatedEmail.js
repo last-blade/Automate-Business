@@ -1,7 +1,10 @@
 import { sendMail } from "../../utils/sendEmail.js";
+import dayjs from "dayjs";
 
 const taskCreatedEmail = async ({ taskTitle, assigneeName, assigneeEmail, dueDate }) => {
     const subject = "📝 New Task Assigned - KPS Automate Business Solutions";
+
+    const formattedDueDate = dueDate ? dayjs(dueDate).format("D MMMM YYYY") : null;
 
     const htmlBody = `
         <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
@@ -14,10 +17,10 @@ const taskCreatedEmail = async ({ taskTitle, assigneeName, assigneeEmail, dueDat
                     <td style="padding: 8px; border: 1px solid #ccc;"><strong>Task</strong></td>
                     <td style="padding: 8px; border: 1px solid #ccc;">${taskTitle}</td>
                 </tr>
-                ${dueDate ? `
+                ${formattedDueDate ? `
                 <tr>
                     <td style="padding: 8px; border: 1px solid #ccc;"><strong>Due Date</strong></td>
-                    <td style="padding: 8px; border: 1px solid #ccc;">${dueDate}</td>
+                    <td style="padding: 8px; border: 1px solid #ccc;">${formattedDueDate}</td>
                 </tr>
                 ` : ''}
             </table>
