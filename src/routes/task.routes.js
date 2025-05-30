@@ -35,7 +35,7 @@ router.route("/filter-tasks").get(authMiddleware, filterTasks);
 router.route("/assigned-to-me").get(authMiddleware, fetchTasksAssignedToMe);
 router.route("/all-tasks").get(authMiddleware, fetchDelegateAndAssignedToMeTasks);
 router.route("/my-assigned-cat-task-counts").get(authMiddleware, fetchCategorizedTasksCountingAssignedByMe);
-router.route("/total-categorized-tasks").get(authMiddleware, totalCategorizedTasksCounting);
+router.route("/total-categorized-tasks-counting").get(authMiddleware, totalCategorizedTasksCounting);
 
 //PUT
 router.route("/edit-task/:taskId").put(authMiddleware, editTask);
