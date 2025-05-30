@@ -13,6 +13,7 @@ import { sendOTP } from "../controllers/userControllers/sendOTP.controller.js";
 import { verifyOTP } from "../controllers/userControllers/verifyOTP.controller.js";
 import { fetchTeamMemberDetails } from "../controllers/userControllers/fetchTeamMemberDetails.controller.js";
 import { searchTeamMember } from "../controllers/userControllers/searchTeamMember.controller.js";
+import { changeWhatsappNumber } from "../controllers/userControllers/changeWhatsappNumber.controller.js";
 
 const router = Router();
 
@@ -33,6 +34,9 @@ router.route("/search-team-member").get(authMiddleware, searchTeamMember);
 
 //DELETE
 router.route("/delete-member/:memberId").delete(authMiddleware, deleteMember);
+
+//PATCH
+router.route("/change-whatsapp-number").patch(authMiddleware, changeWhatsappNumber);
 
 //OTP
 router.route("/send-otp").post(sendOTP);
