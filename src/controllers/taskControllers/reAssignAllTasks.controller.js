@@ -1,3 +1,5 @@
+import taskReAssignedEmail from "../../emails/taskEmails/taskReAssignedEmail.js";
+import taskRemovedFromUserEmail from "../../emails/taskEmails/taskRemovedFromUserEmail.js";
 import { apiError, apiResponse, asyncHandler, Task, User } from "../allImports.js";
 
 const reAssignAllTasks = asyncHandler(async (request, response) => {
@@ -21,6 +23,13 @@ const reAssignAllTasks = asyncHandler(async (request, response) => {
 
     const oldTeamMemberId = oldTeamMemberToWhichTaskRemove._id;
 
+    const tasksToUpdate = await Task.find({ taskAssignedTo: oldTeamMemberId });
+
+    if (tasksToUpdate.length === 0) {
+        return response.status(200)
+        .json(new apiResponse(200, {}, "No tasks to reassign from the provided email"));
+    }
+
     await Task.updateMany(
         {
             taskAssignedTo: oldTeamMemberId
@@ -32,6 +41,22 @@ const reAssignAllTasks = asyncHandler(async (request, response) => {
             }
         }
     )
+
+    // Sending reassignment email to new assignee
+    await taskReAssignedEmail({
+        newAssigneeName: foundNewTeamMemberToWhichTaskAssign.fullname,
+        newAssigneeEmail: foundNewTeamMemberToWhichTaskAssign.email,
+        oldUserEmail: confirmEmail,
+        totalTasksReassigned: tasksToUpdate.length,
+    });
+
+    // Sending removal email to old assignee
+    await taskRemovedFromUserEmail({
+        oldUserName: oldTeamMemberToWhichTaskRemove.fullname,
+        oldUserEmail: oldTeamMemberToWhichTaskRemove.email,
+        newUserName: foundNewTeamMemberToWhichTaskAssign.fullname,
+        totalTasksRemoved: tasksToUpdate.length,
+    });
 
     return response.status(200)
     .json(
