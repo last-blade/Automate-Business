@@ -6,6 +6,8 @@ const verifyOtpHelper = async (incomingEmail, incomingOTP) => {
 
     const foundUser = await OTP.findOne({email: incomingEmail});
 
+    incomingOTP = parseInt(incomingOTP);
+
     if(!foundUser){
         throw new apiError(400, "OTP expired, send OTP again.")
     }
