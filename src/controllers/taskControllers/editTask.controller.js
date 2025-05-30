@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { apiError, apiResponse, asyncHandler, Task } from "../allImports.js";
+import { Activity, apiError, apiResponse, asyncHandler, Task } from "../allImports.js";
 import taskEditedEmail from "../../emails/taskEmails/taskEditedEmail.js";
 
 const editTask = asyncHandler(async (request, response) => {
@@ -9,7 +9,7 @@ const editTask = asyncHandler(async (request, response) => {
         throw new apiError(404, "Task id not found!")
     }
 
-    const foundTask = await Task.findById(taskId).populate("taskAssignedTo", "fullname email");
+    const foundTask = await Task.findById(taskId).populate("taskAssignedTo", "fullname email").populate("taskCreatedBy", "fullname");
 
     if(!foundTask){
         throw new apiError(404, "Task not found, task may be deleted")
@@ -71,6 +71,13 @@ const editTask = asyncHandler(async (request, response) => {
         editorName: request.user?.fullname || "A team member",
         oldTask,
         newTask: updatedTask
+    });
+
+    await Activity.create({
+        messageType: "task_edited",
+        message: `${foundTask.taskCreatedBy.fullname} edited task from: ${foundTask.taskTitle} to ${updatedTask.taskTitle}`,
+        user: foundTask.taskAssignedTo._id,
+        task: foundTask._id,
     });
 
     return response.status(201)
