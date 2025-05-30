@@ -3,7 +3,7 @@ import mongoose, { Schema } from "mongoose";
 const activitySchema = new Schema({
     messageType: {
         type: String,
-        enum: ["task_created", "comment_added", "team_member_added"],
+        enum: ["task_created", "comment_added", "task_deleted", "task_edited", "tasks_re-assigned"],
         required: true
     },
 
@@ -21,7 +21,7 @@ const activitySchema = new Schema({
     task: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Task",
-        required: true,
+        // required: true,
     },
 
 }, {timestamps: true});
