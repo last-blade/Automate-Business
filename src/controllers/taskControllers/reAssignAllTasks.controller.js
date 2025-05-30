@@ -1,6 +1,6 @@
 import taskReAssignedEmail from "../../emails/taskEmails/taskReAssignedEmail.js";
 import taskRemovedFromUserEmail from "../../emails/taskEmails/taskRemovedFromUserEmail.js";
-import { apiError, apiResponse, asyncHandler, Task, User } from "../allImports.js";
+import { Activity, apiError, apiResponse, asyncHandler, Task, User } from "../allImports.js";
 
 const reAssignAllTasks = asyncHandler(async (request, response) => {
     const {newTeamMemberToWhichTaskAssignId, confirmEmail} = request.body;
@@ -56,6 +56,20 @@ const reAssignAllTasks = asyncHandler(async (request, response) => {
         oldUserEmail: oldTeamMemberToWhichTaskRemove.email,
         newUserName: foundNewTeamMemberToWhichTaskAssign.fullname,
         totalTasksRemoved: tasksToUpdate.length,
+    });
+
+    await Activity.create({
+        messageType: "tasks_re-assigned",
+        message: `${request.user.fullname} re-assigned your all tasks to: ${foundNewTeamMemberToWhichTaskAssign.fullname}`,
+        user: oldTeamMemberId,
+        // task: {},
+    });
+    
+    await Activity.create({
+        messageType: "tasks_re-assigned",
+        message: `${request.user.fullname} assigned all tasks of: ${oldTeamMemberToWhichTaskRemove.fullname} to you`,
+        user: newTeamMemberToWhichTaskAssignId,
+        // task: {},
     });
 
     return response.status(200)
