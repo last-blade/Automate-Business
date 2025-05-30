@@ -1,3 +1,4 @@
+import userRegistrationEmail from "../../emails/userEmails/userRegistrationEmail.js";
 import { apiError, apiResponse, asyncHandler, User } from "../allImports.js";
 
 const registerUser = asyncHandler(async (request, response) => {
