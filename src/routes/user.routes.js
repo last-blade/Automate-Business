@@ -15,6 +15,7 @@ import { fetchTeamMemberDetails } from "../controllers/userControllers/fetchTeam
 import { searchTeamMember } from "../controllers/userControllers/searchTeamMember.controller.js";
 import { changeWhatsappNumber } from "../controllers/userControllers/changeWhatsappNumber.controller.js";
 import { deleteMyAccount } from "../controllers/userControllers/deleteMyAccount.controller.js";
+import { editProfile } from "../controllers/userControllers/editProfile.controller.js";
 
 const router = Router();
 
@@ -36,6 +37,9 @@ router.route("/search-team-member").get(authMiddleware, searchTeamMember);
 //DELETE
 router.route("/delete-member/:memberId").delete(authMiddleware, deleteMember);
 router.route("/delete-my-account").delete(authMiddleware, deleteMyAccount);
+
+//PUT
+router.route("/edit-profile").put(authMiddleware, editProfile);
 
 //PATCH
 router.route("/change-whatsapp-number").patch(authMiddleware, changeWhatsappNumber);
