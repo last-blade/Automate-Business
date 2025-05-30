@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { apiError, apiResponse, asyncHandler, Task, User } from "../allImports.js";
+import { Activity, apiError, apiResponse, asyncHandler, Task, User } from "../allImports.js";
 import taskCreatedEmail from "../../emails/taskEmails/taskCreatedEmail.js";
 
 const createTask = asyncHandler(async (request, response) => {
@@ -47,7 +47,7 @@ const createTask = asyncHandler(async (request, response) => {
 
     const newTask = await Task.create(taskData);
 
-    const createdTask = await Task.findById(newTask._id).populate("taskAssignedTo", "fullname email taskDueDate");
+    const createdTask = await Task.findById(newTask._id).populate("taskAssignedTo", "fullname email taskDueDate").populate("taskCreatedBy", "fullname email");
 
     if (!createdTask) {
         throw new apiError(500, "Something went wrong while assigning task");
@@ -56,6 +56,13 @@ const createTask = asyncHandler(async (request, response) => {
     const taskAssignedToUser = createdTask.taskAssignedTo;
 
     await taskCreatedEmail({taskTitle, assigneeName: taskAssignedToUser.fullname, assigneeEmail: taskAssignedToUser.email, dueDate: taskDueDate})
+
+    await Activity.create({
+        messageType: "task_created",
+        message: `${createdTask.taskCreatedBy.fullname} created task: ${createdTask.taskTitle}`,
+        user: createdTask.taskAssignedTo._id,
+        task: createdTask._id,
+    });
 
     return response.status(201)
     .json(
