@@ -13,6 +13,8 @@ import { reAssignAllTasks } from "../controllers/taskControllers/reAssignAllTask
 import { filterTasks } from "../controllers/taskControllers/filterTasks.controller.js";
 import { fetchTasksAssignedToMe } from "../controllers/taskControllers/fetchTasksAssignedToMe.controller.js";
 import { fetchDelegateAndAssignedToMeTasks } from "../controllers/taskControllers/fetchDelegateAndAssignedToMeTasks.controller.js";
+import { fetchCategorizedTasksCountingAssignedByMe } from "../controllers/taskControllers/fetchCategorizedTasksCountingAssignedByMe.controller.js";
+import { totalCategorizedTasksCounting } from "../controllers/taskControllers/totalCategorizedTasksCounting.controller.js";
 
 const router = Router();
 
@@ -27,11 +29,13 @@ router.route("/delete-task/:taskId").delete(authMiddleware, deleteTask);
 router.route("/view-task/:taskId").get(authMiddleware, viewTask);
 router.route("/delegated-tasks").get(authMiddleware, fetchDelegatedTasks);
 router.route("/categorized-tasks").get(authMiddleware, fetchCategorizedTasks);
-router.route("/categorywise-task-counting").get(authMiddleware, fetchCategorizedTasksCounting);
+router.route("/categorywise-task-counting-assigned-to-me").get(authMiddleware, fetchCategorizedTasksCounting);
 router.route("/search-task").get(authMiddleware, searchTask);
 router.route("/filter-tasks").get(authMiddleware, filterTasks);
 router.route("/assigned-to-me").get(authMiddleware, fetchTasksAssignedToMe);
 router.route("/all-tasks").get(authMiddleware, fetchDelegateAndAssignedToMeTasks);
+router.route("/my-assigned-cat-task-counts").get(authMiddleware, fetchCategorizedTasksCountingAssignedByMe);
+router.route("/total-categorized-tasks").get(authMiddleware, totalCategorizedTasksCounting);
 
 //PUT
 router.route("/edit-task/:taskId").put(authMiddleware, editTask);
