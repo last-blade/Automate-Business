@@ -1,5 +1,5 @@
 import taskDeletedEmail from "../../emails/taskEmails/taskDeletedEmail.js";
-import { apiResponse, asyncHandler, Task } from "../allImports.js";
+import { Activity, apiResponse, asyncHandler, Task } from "../allImports.js";
 
 const deleteTask = asyncHandler(async (request, response) => {
     const {taskId} = request?.params;
@@ -8,7 +8,7 @@ const deleteTask = asyncHandler(async (request, response) => {
         throw new apiError(404, "Task id not found!")
     }
 
-    const foundTask = await Task.findById(taskId).populate("taskAssignedTo", "fullname email");
+    const foundTask = await Task.findById(taskId).populate("taskAssignedTo", "fullname email").populate("taskCreatedBy", "fullname");
 
     if(!foundTask){
         return response.status(404)
@@ -24,6 +24,13 @@ const deleteTask = asyncHandler(async (request, response) => {
         taskTitle: foundTask.taskTitle,
         assigneeName: foundTask.taskAssignedTo.fullname,
         assigneeEmail: foundTask.taskAssignedTo.email
+    });
+
+    await Activity.create({
+        messageType: "task_deleted",
+        message: `${foundTask.taskCreatedBy.fullname} deleted task: ${foundTask.taskTitle}`,
+        user: foundTask.taskAssignedTo._id,
+        task: foundTask._id,
     });
 
     return response.status(200)
