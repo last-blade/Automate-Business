@@ -33,6 +33,9 @@ const registerUser = asyncHandler(async (request, response) => {
         throw new apiError(500, "Something went wrong while registration")
     }
 
+    // Sending welcome email to the user
+    await userRegistrationEmail({ email, fullname });
+
     return response.status(201)
     .json(
         new apiResponse(201, newUserFound, "User registered successfully")
