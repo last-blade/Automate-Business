@@ -1,3 +1,4 @@
+import sendWelcomeEmail from "../../emails/userEmails/sendWelcomeEmail.js";
 import { apiError, apiResponse, asyncHandler, NewMember, User } from "../allImports.js";
 
 const addNewTeamMember = asyncHandler(async (request, response) => {
@@ -33,11 +34,14 @@ const addNewTeamMember = asyncHandler(async (request, response) => {
         newMember: isUserCreated._id,
     });
 
-    const foundNewMember = await NewMember.findById(newTeamMember._id);
+    const foundNewMember = await NewMember.findById(newTeamMember._id).populate("newMemberCreatedBy", "fullname");
 
     if(!foundNewMember){
         throw new apiError(500, "Something went wrong, while adding a new member")
     }
+
+    // Sending Welcome Email
+    await sendWelcomeEmail({ fullname, email, password, createdBy: foundNewMember.newMemberCreatedBy.fullname});
 
     return response.status(201)
     .json(
