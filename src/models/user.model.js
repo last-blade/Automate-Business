@@ -14,6 +14,7 @@ const userSchema = new Schema({
         lowercase: true,
         index: true,
         required: true,
+        trim: true,
     },
 
     password: {
@@ -30,6 +31,7 @@ const userSchema = new Schema({
     whatsappNumber: {
         type: Number,
         required: true,
+        trim: true
     },
 
     location: {
@@ -50,6 +52,14 @@ const userSchema = new Schema({
     department: {
         type: String,
          default: "NA",
+    },
+
+    taskImage: {
+        type: String
+    },
+
+    complaintImage: {
+        type: String,
     },
 
     // reportingManager: {
