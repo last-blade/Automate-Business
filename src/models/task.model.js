@@ -76,7 +76,14 @@ const taskSchema = new Schema({
     },
 
     taskImage: {
-        type: String
+        url: {
+            type: String,
+            required: false
+        },
+        public_id: {
+            type: String,
+            required: false
+        }
     },
 
     taskCreatedBy: {
