@@ -21,7 +21,6 @@ const router = Router();
 
 //POST
 router.route("/create-task").post(authMiddleware, createTask);
-router.route("/change-task-status/:taskId").post(authMiddleware, changeTaskStatus);
 
 //DELETE
 router.route("/delete-task/:taskId").delete(authMiddleware, deleteTask);
@@ -44,5 +43,6 @@ router.route("/edit-task/:taskId").put(authMiddleware, editTask);
 //PATCH
 router.route("/re-assign-all-tasks").patch(authMiddleware, reAssignAllTasks);
 router.route("/set-overdue-status").patch(authMiddleware, checkAndSetOverdueStatus);
+router.route("/change-task-status/:taskId").patch(authMiddleware, changeTaskStatus);
 
 export default router;
