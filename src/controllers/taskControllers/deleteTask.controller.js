@@ -1,4 +1,5 @@
 import taskDeletedEmail from "../../emails/taskEmails/taskDeletedEmail.js";
+import { deleteFromCloudinary } from "../../utils/cloudinary.js";
 import { Activity, apiResponse, asyncHandler, Task } from "../allImports.js";
 
 const deleteTask = asyncHandler(async (request, response) => {
@@ -18,6 +19,10 @@ const deleteTask = asyncHandler(async (request, response) => {
     }
 
     await Task.findByIdAndDelete(taskId);
+
+    if(foundTask.taskImage?.public_id){
+        await deleteFromCloudinary(foundTask.taskImage?.public_id)
+    }
 
     // Sending task deletion email
     await taskDeletedEmail({
