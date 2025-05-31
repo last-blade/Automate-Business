@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
-import { Activity, apiError, apiResponse, asyncHandler, Task, User } from "../allImports.js";
+import { Activity, apiError, apiResponse, asyncHandler, Task } from "../allImports.js";
 import taskCreatedEmail from "../../emails/taskEmails/taskCreatedEmail.js";
+import { uploadOnCloudinary } from "../../utils/cloudinary.js";
 
 const createTask = asyncHandler(async (request, response) => {
     const {
@@ -29,6 +30,23 @@ const createTask = asyncHandler(async (request, response) => {
             throw new apiError(400, "If provided, taskFrequency must be an object with a 'type' field");
         }
     }
+    
+
+    // Upload image if provided
+    let taskImage = null;
+    const taskImageLocalFilePath = request.file?.path;
+
+    if (taskImageLocalFilePath) {
+        const taskImageUploaded = await uploadOnCloudinary(taskImageLocalFilePath);
+        if (taskImageUploaded) {
+            taskImage = {
+                url: taskImageUploaded.url,
+                public_id: taskImageUploaded.public_id
+            };
+        }
+    }
+    // console.log("request file: ",request.file);
+    // console.log("task img url: ",taskImageLocalFilePath)
 
     const taskData = {
         taskTitle,
@@ -37,6 +55,7 @@ const createTask = asyncHandler(async (request, response) => {
         taskCategory,
         taskDueDate,
         taskPriority,
+        taskImage,
         taskCreatedBy: request.user?.id,
     };
 
