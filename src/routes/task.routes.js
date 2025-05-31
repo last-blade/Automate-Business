@@ -16,11 +16,13 @@ import { fetchDelegateAndAssignedToMeTasks } from "../controllers/taskController
 import { fetchCategorizedTasksCountingAssignedByMe } from "../controllers/taskControllers/fetchCategorizedTasksCountingAssignedByMe.controller.js";
 import { totalCategorizedTasksCounting } from "../controllers/taskControllers/totalCategorizedTasksCounting.controller.js";
 import { checkAndSetOverdueStatus } from "../controllers/taskControllers/checkAndSetOverdueStatus.controller.js";
+import { handleMulterUpload } from "../middlewares/handleMulterUpload.middleware.js";
+
 
 const router = Router();
 
 //POST
-router.route("/create-task").post(authMiddleware, createTask);
+router.route("/create-task").post(authMiddleware, handleMulterUpload("taskImage"), createTask);
 
 //DELETE
 router.route("/delete-task/:taskId").delete(authMiddleware, deleteTask);
@@ -38,7 +40,7 @@ router.route("/my-assigned-cat-task-counts").get(authMiddleware, fetchCategorize
 router.route("/total-categorized-tasks-counting").get(authMiddleware, totalCategorizedTasksCounting);
 
 //PUT
-router.route("/edit-task/:taskId").put(authMiddleware, editTask);
+router.route("/edit-task/:taskId").put(authMiddleware, handleMulterUpload("taskImage"), editTask);
 
 //PATCH
 router.route("/re-assign-all-tasks").patch(authMiddleware, reAssignAllTasks);
