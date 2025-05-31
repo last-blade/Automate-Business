@@ -29,7 +29,7 @@ const checkAndSetOverdueStatus = asyncHandler(async (request, response) => {
 
     const allTasks = await Task.find({
         taskDueDate: { $lt: currentDate },
-        taskStatus: { $ne: "Overdue" },
+        taskStatus: { $in: ["Pending", "In Progress"] }
     });
 
     const userIdsSet = new Set();
@@ -40,7 +40,7 @@ const checkAndSetOverdueStatus = asyncHandler(async (request, response) => {
     await Task.updateMany(
         { 
             taskDueDate: { $lt: currentDate },
-            taskStatus: { $ne: "Overdue" },
+            taskStatus: { $in: ["Pending", "In Progress"] }
         },
         { $set: { taskStatus: "Overdue" } }
     );
@@ -48,7 +48,7 @@ const checkAndSetOverdueStatus = asyncHandler(async (request, response) => {
     await sendOverdueEmailsToUsers(userIdsSet);
 
     return response.sendStatus(200);
-
 });
+
 
 export {checkAndSetOverdueStatus}
