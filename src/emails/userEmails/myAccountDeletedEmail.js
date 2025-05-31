@@ -4,17 +4,37 @@ const myAccountDeletedEmail = async ({ fullname, email }) => {
     const subject = `🗑️ Your KPS Account Has Been Deleted`;
 
     const htmlBody = `
-        <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
-            <h2 style="color: #d9534f;">We're sorry to see you go, ${fullname}!</h2>
+        <div style="max-width: 700px; margin: auto; border: 1px solid #ddd; border-radius: 8px; font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #fff; color: #333;">
+            <div style="background-color: #d9534f; color: #fff; padding: 20px 30px; border-radius: 8px 8px 0 0;">
+            <h2 style="margin: 0;">KPS Automate Business Solutions</h2>
+            <p style="margin: 4px 0 0;">🗑️ Account Deletion Confirmation</p>
+            </div>
 
-            <p>Your account with <strong>KPS Automate Business Solutions</strong> has been successfully deleted as per your request.</p>
+            <div style="padding: 30px;">
+            <p style="font-size: 16px;">Dear <strong>${fullname}</strong>,</p>
 
-            <p>If you didn’t initiate this action or believe this was a mistake, please reach out to our support team immediately.</p>
+            <p style="font-size: 15px;">
+                This email confirms that your account has been <strong>successfully deleted</strong> from 
+                <strong>KPS Automate Business Solutions</strong> as per your request.
+            </p>
 
-            <p>We value your time with us and hope to serve you again in the future. You're always welcome back.</p>
+            <p style="margin-top: 15px;">
+                If you did not initiate this deletion or believe it was done in error, please contact our support team as soon as possible.
+            </p>
 
-            <p>Wishing you all the best,<br/>
-            The <strong>KPS Automate Business Solutions</strong> Team</p>
+            <p style="margin-top: 15px;">
+                We sincerely appreciate the time you spent with us. You're always welcome to rejoin the platform in the future.
+            </p>
+
+            <p style="margin-top: 30px; font-size: 14px;">Wishing you the very best in all your endeavors.</p>
+
+            <p style="margin-top: 30px; font-size: 14px;">Warm regards,</p>
+            <p style="font-weight: 600; font-size: 15px;">KPS Automate Business Solutions<br/>Support Team</p>
+            </div>
+
+            <div style="background-color: #f9f9f9; text-align: center; padding: 15px; font-size: 12px; color: #999; border-top: 1px solid #ddd; border-radius: 0 0 8px 8px;">
+            <p style="margin: 0;">© ${new Date().getFullYear()} KPS Automate Business Solutions. All rights reserved.</p>
+            </div>
         </div>
     `;
 
