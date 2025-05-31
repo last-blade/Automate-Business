@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { Activity, apiError, apiResponse, asyncHandler, Task } from "../allImports.js";
 import taskEditedEmail from "../../emails/taskEmails/taskEditedEmail.js";
+import { deleteFromCloudinary, uploadOnCloudinary } from "../../utils/cloudinary.js";
 
 const editTask = asyncHandler(async (request, response) => {
     const {taskId} = request?.params;
@@ -55,6 +56,25 @@ const editTask = asyncHandler(async (request, response) => {
     // Include optional field matlab ki "taskFrequency" field if present
     if (taskFrequency) {
         taskData.taskFrequency = taskFrequency;
+    }
+
+    const taskImageLocalFilePath = request.file?.path;
+
+    if (taskImageLocalFilePath) {
+        // Delete old image from Cloudinary if present
+        if (foundTask.taskImage?.public_id) {
+            await deleteFromCloudinary(foundTask.taskImage.public_id);
+        }
+
+        // Upload new image
+        const taskImageUploaded = await uploadOnCloudinary(taskImageLocalFilePath);
+
+        if (taskImageUploaded) {
+            taskData.taskImage = {
+                url: taskImageUploaded.url,
+                public_id: taskImageUploaded.public_id
+            };
+        }
     }
 
     const updatedTask = await Task.findByIdAndUpdate(taskId, {
