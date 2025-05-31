@@ -15,6 +15,7 @@ import { fetchTasksAssignedToMe } from "../controllers/taskControllers/fetchTask
 import { fetchDelegateAndAssignedToMeTasks } from "../controllers/taskControllers/fetchDelegateAndAssignedToMeTasks.controller.js";
 import { fetchCategorizedTasksCountingAssignedByMe } from "../controllers/taskControllers/fetchCategorizedTasksCountingAssignedByMe.controller.js";
 import { totalCategorizedTasksCounting } from "../controllers/taskControllers/totalCategorizedTasksCounting.controller.js";
+import { checkAndSetOverdueStatus } from "../controllers/taskControllers/checkAndSetOverdueStatus.controller.js";
 
 const router = Router();
 
@@ -40,7 +41,8 @@ router.route("/total-categorized-tasks-counting").get(authMiddleware, totalCateg
 //PUT
 router.route("/edit-task/:taskId").put(authMiddleware, editTask);
 
-
 //PATCH
 router.route("/re-assign-all-tasks").patch(authMiddleware, reAssignAllTasks);
+router.route("/set-overdue-status").patch(authMiddleware, checkAndSetOverdueStatus);
+
 export default router;
