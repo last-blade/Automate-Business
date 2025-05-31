@@ -13,70 +13,79 @@ const taskEditedEmail = async ({
     const formatDate = (date) => dayjs(date).format("DD MMM YYYY");
 
     const htmlBody = `
-    <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
-        <h2 style="color: #1976D2;">📌 Task Update Notification</h2>
-        <p>Dear <strong>${assigneeName}</strong>,</p>
+        <div style="max-width: 700px; margin: auto; border: 1px solid #ddd; border-radius: 8px; font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #fff; color: #333;">
+        <div style="background-color: #1976D2; color: #fff; padding: 20px 30px; border-radius: 8px 8px 0 0;">
+        <h2 style="margin: 0;">KPS Automate Business Solutions</h2>
+        <p style="margin: 4px 0 0;">Task Edited Notification</p>
+        </div>
+            <div style="padding: 30px;">
+            <p style="font-size: 16px;">Dear <strong>${assigneeName}</strong>,</p>
+            <p style="font-size: 15px;">Your assigned task has been updated by <strong>${editorName}</strong>.</p>
 
-        <p>The task assigned to you has been updated by <strong>${editorName}</strong> in <strong>KPS Automate Business Solutions</strong>.</p>
+            <h3 style="margin-top: 30px; font-size: 17px; color: #1976D2;">📝 Task Update Summary</h3>
 
-        <h3 style="margin-top: 30px;">📝 Task Summary</h3>
-
-        <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; font-size: 14px;">
-            <thead style="background-color: #f5f5f5;">
+            <table style="width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px;">
+                <thead style="background-color: #f1f1f1;">
                 <tr>
-                    <th>Field</th>
-                    <th>Previous</th>
-                    <th>Updated</th>
+                    <th style="border: 1px solid #ccc; padding: 10px;">Field</th>
+                    <th style="border: 1px solid #ccc; padding: 10px;">Previous</th>
+                    <th style="border: 1px solid #ccc; padding: 10px;">Updated</th>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 <tr>
-                    <td><strong>Title</strong></td>
-                    <td>${oldTask.taskTitle}</td>
-                    <td>${newTask.taskTitle}</td>
+                    <td style="border: 1px solid #eee; padding: 10px;"><strong>Title</strong></td>
+                    <td style="border: 1px solid #eee; padding: 10px;">${oldTask.taskTitle}</td>
+                    <td style="border: 1px solid #eee; padding: 10px;">${newTask.taskTitle}</td>
                 </tr>
                 <tr>
-                    <td><strong>Description</strong></td>
-                    <td>${oldTask.taskDescription}</td>
-                    <td>${newTask.taskDescription}</td>
+                    <td style="border: 1px solid #eee; padding: 10px;"><strong>Description</strong></td>
+                    <td style="border: 1px solid #eee; padding: 10px;">${oldTask.taskDescription}</td>
+                    <td style="border: 1px solid #eee; padding: 10px;">${newTask.taskDescription}</td>
                 </tr>
                 <tr>
-                    <td><strong>Category</strong></td>
-                    <td>${oldTask.taskCategory}</td>
-                    <td>${newTask.taskCategory}</td>
+                    <td style="border: 1px solid #eee; padding: 10px;"><strong>Category</strong></td>
+                    <td style="border: 1px solid #eee; padding: 10px;">${oldTask.taskCategory}</td>
+                    <td style="border: 1px solid #eee; padding: 10px;">${newTask.taskCategory}</td>
                 </tr>
                 <tr>
-                    <td><strong>Due Date</strong></td>
-                    <td>${formatDate(oldTask.taskDueDate)}</td>
-                    <td>${formatDate(newTask.taskDueDate)}</td>
+                    <td style="border: 1px solid #eee; padding: 10px;"><strong>Due Date</strong></td>
+                    <td style="border: 1px solid #eee; padding: 10px;">${formatDate(oldTask.taskDueDate)}</td>
+                    <td style="border: 1px solid #eee; padding: 10px;">${formatDate(newTask.taskDueDate)}</td>
                 </tr>
                 <tr>
-                    <td><strong>Priority</strong></td>
-                    <td>${oldTask.taskPriority}</td>
-                    <td>${newTask.taskPriority}</td>
+                    <td style="border: 1px solid #eee; padding: 10px;"><strong>Priority</strong></td>
+                    <td style="border: 1px solid #eee; padding: 10px;">${oldTask.taskPriority}</td>
+                    <td style="border: 1px solid #eee; padding: 10px;">${newTask.taskPriority}</td>
                 </tr>
                 <tr>
-                    <td><strong>Assigned To</strong></td>
-                    <td>${oldTask.taskAssignedTo.fullname}</td>
-                    <td>${newTask.taskAssignedTo.fullname}</td>
+                    <td style="border: 1px solid #eee; padding: 10px;"><strong>Assigned To</strong></td>
+                    <td style="border: 1px solid #eee; padding: 10px;">${oldTask.taskAssignedTo.fullname}</td>
+                    <td style="border: 1px solid #eee; padding: 10px;">${newTask.taskAssignedTo.fullname}</td>
                 </tr>
                 ${
                     oldTask.taskFrequency || newTask.taskFrequency
-                        ? `
+                    ? `
                 <tr>
-                    <td><strong>Frequency</strong></td>
-                    <td>${oldTask.taskFrequency?.type || "-"}</td>
-                    <td>${newTask.taskFrequency?.type || "-"}</td>
+                    <td style="border: 1px solid #eee; padding: 10px;"><strong>Frequency</strong></td>
+                    <td style="border: 1px solid #eee; padding: 10px;">${oldTask.taskFrequency?.type || "-"}</td>
+                    <td style="border: 1px solid #eee; padding: 10px;">${newTask.taskFrequency?.type || "-"}</td>
                 </tr>`
-                        : ""
+                    : ""
                 }
-            </tbody>
-        </table>
+                </tbody>
+            </table>
 
-        <p style="margin-top: 25px;">If you have any questions regarding these changes, please connect with your team lead.</p>
+            <p style="margin-top: 25px; font-size: 14px;">If you have any questions or concerns, please connect with your team lead or manager.</p>
 
-        <p>Warm regards,<br><strong>KPS Automate Business Solutions</strong> Team</p>
-    </div>
+            <p style="margin-top: 30px; font-size: 14px;">Warm regards,</p>
+            <p style="font-weight: 600; font-size: 15px;">KPS Automate Business Solutions<br/>Productivity & Workflow Team</p>
+            </div>
+
+            <div style="background-color: #f9f9f9; text-align: center; padding: 15px; font-size: 12px; color: #999; border-top: 1px solid #ddd; border-radius: 0 0 8px 8px;">
+            <p style="margin: 0;">© ${new Date().getFullYear()} KPS Automate Business Solutions. All rights reserved.</p>
+            </div>
+        </div>
     `;
 
     await sendMail(assigneeEmail, subject, htmlBody);
