@@ -5,7 +5,7 @@ import { apiResponse, asyncHandler, Task, User } from "../allImports.js";
 const sendOverdueEmailsToUsers = async (userIdsSet) => {
     for (const userId of userIdsSet) {
         const user = await User.findById(userId);
-        console.log(user);
+
         if (!user || !user.email) continue;
 
         const overdueCount = await Task.countDocuments({
@@ -47,9 +47,8 @@ const checkAndSetOverdueStatus = asyncHandler(async (request, response) => {
 
     await sendOverdueEmailsToUsers(userIdsSet);
 
-    return response.status(200).json(
-        new apiResponse(200, {}, "Tasks updated with overdue status")
-    );
+    return response.sendStatus(200);
+
 });
 
 export {checkAndSetOverdueStatus}
