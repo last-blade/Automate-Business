@@ -2,6 +2,12 @@ import { v2 as cloudinary } from 'cloudinary';
 import fs from "fs";
 
 
+cloudinary.config({ 
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+    api_key: process.env.CLOUDINARY_API_KEY, 
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
 const uploadOnCloudinary = async (localFilepath) => {
     try {
         if(!localFilepath){
@@ -24,10 +30,20 @@ const uploadOnCloudinary = async (localFilepath) => {
     }
 }
 
-cloudinary.config({ 
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
-    api_key: process.env.CLOUDINARY_API_KEY, 
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-});
 
-export {uploadOnCloudinary}
+const deleteFromCloudinary = async (publicId) => {
+  try {
+    if (!publicId) return null;
+
+    const result = await cloudinary.uploader.destroy(publicId);
+
+    console.log("🗑️ Cloudinary delete result:", result);
+    return result;
+  } catch (error) {
+    console.error("❌ Error deleting from Cloudinary:", error);
+    return null;
+  }
+};
+
+
+export {uploadOnCloudinary, deleteFromCloudinary}
