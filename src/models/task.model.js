@@ -75,6 +75,10 @@ const taskSchema = new Schema({
         default: "Pending",
     },
 
+    taskImage: {
+        type: String
+    },
+
     taskCreatedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
