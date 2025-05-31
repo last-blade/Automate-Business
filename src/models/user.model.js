@@ -54,10 +54,6 @@ const userSchema = new Schema({
          default: "NA",
     },
 
-    taskImage: {
-        type: String
-    },
-
     complaintImage: {
         type: String,
     },
