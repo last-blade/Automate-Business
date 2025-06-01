@@ -9,6 +9,10 @@ const createComment = asyncHandler(async (request, response) => {
         throw new apiError(404, "Task id not found!")
     }
 
+    if(!comment){
+        throw new apiError(404, "Comment is required")
+    }
+
     const foundTask = await Task.findById(taskId).populate("taskAssignedTo", "_id fullname");
 
     if(!foundTask){
