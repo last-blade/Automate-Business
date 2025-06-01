@@ -34,6 +34,7 @@ const deleteTask = asyncHandler(async (request, response) => {
     await Activity.create({
         messageType: "task_deleted",
         message: `${foundTask.taskCreatedBy.fullname} deleted task: ${foundTask.taskTitle}`,
+        creatorName: foundTask.taskCreatedBy.fullname,
         user: foundTask.taskAssignedTo._id,
         task: foundTask._id,
     });
