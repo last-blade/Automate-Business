@@ -18,24 +18,37 @@ const fetchTotalComments = asyncHandler(async (request, response) => {
         )
     }
 
-    const taskAssignedTo = foundTask.taskAssignedTo;
+    const taskAssignedTo = foundTask.taskAssignedTo.toString();
 
-    const taskAssignedBy = foundTask.taskCreatedBy;
-
-    console.log(taskAssignedTo, " ::: ", taskAssignedBy)
+    const taskCreatedBy = foundTask.taskCreatedBy.toString();
     
     const comments = await Comment.find({
         commentedTask: taskId,
         commentedBy: {
-            $in: [taskAssignedTo, taskAssignedBy],
+            $in: [taskAssignedTo, taskCreatedBy],
         },
     })
     .populate("commentedBy", "fullname email").select("-_id -__v")
     .populate("commentedTask", "taskTitle")
 
+    // console.log(comments)
+
+    const assignedToComments = [];
+    const createdByComments = [];
+
+    for (const comment of comments) {
+        const commenterId = comment.commentedBy._id.toString();
+
+        if (commenterId === taskAssignedTo) {
+            assignedToComments.push(comment);
+        } else if (commenterId === taskCreatedBy) {
+            createdByComments.push(comment);
+        }
+    }
+
     return response.status(200)
     .json(
-        new apiResponse(200, comments, `All comments related to task '${foundTask.taskTitle}' fetched`)
+        new apiResponse(200, {assignedToComments, createdByComments}, `All comments related to task '${foundTask.taskTitle}' fetched`)
     )
 });
 
