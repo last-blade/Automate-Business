@@ -61,6 +61,7 @@ const reAssignAllTasks = asyncHandler(async (request, response) => {
     await Activity.create({
         messageType: "tasks_re-assigned",
         message: `${request.user.fullname} re-assigned your all tasks to: ${foundNewTeamMemberToWhichTaskAssign.fullname}`,
+        creatorName: request.user.fullname,
         user: oldTeamMemberId,
         // task: {},
     });
