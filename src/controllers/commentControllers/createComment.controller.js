@@ -38,6 +38,7 @@ const createComment = asyncHandler(async (request, response) => {
     await Activity.create({
         messageType: "comment_added",
         message: `${request.user?.fullname} commented on: ${foundTask.taskTitle}: ${foundComment.comment}`,
+        creatorName: request.user.fullname,
         user: foundTask.taskAssignedTo._id,
         task: foundTask._id,
     });
