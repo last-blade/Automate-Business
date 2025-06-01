@@ -79,6 +79,7 @@ const createTask = asyncHandler(async (request, response) => {
     await Activity.create({
         messageType: "task_created",
         message: `${createdTask.taskCreatedBy.fullname} created task: ${createdTask.taskTitle}`,
+        creatorName: createdTask.taskCreatedBy.fullname,
         user: createdTask.taskAssignedTo._id,
         task: createdTask._id,
     });
