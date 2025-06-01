@@ -9,7 +9,8 @@ const fetchCategorizedTasks = asyncHandler(async (request, response) => {
     const categorizedTasks = await Task.aggregate([
         {
             $match: {
-                taskAssignedTo: new mongoose.Types.ObjectId(userId)
+                taskAssignedTo: new mongoose.Types.ObjectId(userId),
+                taskStatus: query,
             }
         },
 
@@ -21,11 +22,11 @@ const fetchCategorizedTasks = asyncHandler(async (request, response) => {
             }
         },
 
-        {
-            $match: {
-                _id: query
-            }
-        },
+        // {
+        //     $match: {
+        //         _id: query
+        //     }
+        // },
 
         {
             $unwind: "$allTasks"
