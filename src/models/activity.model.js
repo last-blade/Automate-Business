@@ -24,6 +24,11 @@ const activitySchema = new Schema({
         // required: true,
     },
 
+    creatorName: {
+        type: String,
+        required: true, 
+    }
+
 }, {timestamps: true});
 
 export const Activity = mongoose.model("Activity", activitySchema);
