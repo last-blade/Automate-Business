@@ -57,11 +57,13 @@ const getUserActivities = asyncHandler(async (request, response) => {
             $project: {
                 _id: 0,
                 createdAt: 1,
-                "userFullname": "$userInfo.fullname",
+                creatorName: 1,
+                // "userFullname": "$userInfo.fullname",
                 "taskTitle": "$taskInfo.taskTitle",
                 messageType: 1,
+                // "creatorName": "$creatorInfo.fullname"
             }
-        }
+        },
     ]);
 
     return response.status(200)
