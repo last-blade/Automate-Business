@@ -9,7 +9,7 @@ const createComment = asyncHandler(async (request, response) => {
         throw new apiError(404, "Task id not found!")
     }
 
-    if(comment.trim() === ""){
+    if(comment.trim() === undefined || comment.trim() === ""){
         throw new apiError(404, "Comment is required")
     }
 
