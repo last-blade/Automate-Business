@@ -25,6 +25,42 @@ const getUserActivities = asyncHandler(async (request, response) => {
 
         {
             $limit: limit
+        },
+
+        {
+            $lookup: {
+                from: "users",
+                localField: "user",
+                foreignField: "_id",
+                as: "userInfo"
+            }
+        },
+
+        {
+            $unwind: "$userInfo"
+        },
+
+        {
+            $lookup: {
+                from: "tasks",
+                localField: "task",
+                foreignField: "_id",
+                as: "taskInfo"
+            }
+        },
+
+        {
+            $unwind: "$taskInfo"
+        },
+
+        {
+            $project: {
+                _id: 0,
+                createdAt: 1,
+                "userFullname": "$userInfo.fullname",
+                "taskTitle": "$taskInfo.taskTitle",
+                messageType: 1,
+            }
         }
     ]);
 
