@@ -1,5 +1,5 @@
 import changeTaskStatusEmail from "../../emails/taskEmails/changeTaskStatusEmail.js";
-import { apiError, apiResponse, asyncHandler, Task } from "../allImports.js";
+import { Activity, apiError, apiResponse, asyncHandler, Task } from "../allImports.js";
 
 const changeTaskStatus = asyncHandler(async (request, response) => {
     const {taskId} = request?.params;
@@ -23,13 +23,13 @@ const changeTaskStatus = asyncHandler(async (request, response) => {
         $set: {
             taskStatus: status.status
         }
-    }, {new: true}).select("-__v -_id").populate("taskCreatedBy", "fullname email");
+    }, {new: true}).select("-__v -_id").populate("taskCreatedBy", "fullname email").populate("taskAssignedTo", "fullname");
 
     if(!updatedTask){
         throw new apiError(500, "Something went wrong while changing the status of the task")
     }
 
-    const {taskTitle, taskCreatedBy, taskStatus} = updatedTask;
+    const {taskTitle, taskCreatedBy, taskStatus, taskAssignedTo} = updatedTask;
 
     await changeTaskStatusEmail({
         taskTitle,
@@ -37,6 +37,14 @@ const changeTaskStatus = asyncHandler(async (request, response) => {
         assigneeEmail: taskCreatedBy.email,
         newStatus: taskStatus
     });
+
+    await Activity.create({
+        messageType: "completed",
+        message: `${taskAssignedTo.fullname} marked '${taskTitle}' as ${taskStatus}`,
+        user: updatedTask.taskCreatedBy,
+        task: taskId,
+        creatorName: taskAssignedTo.fullname,
+    })
 
     return response.status(200)
     .json(
