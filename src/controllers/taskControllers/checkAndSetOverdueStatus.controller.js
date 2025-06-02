@@ -1,5 +1,5 @@
 import overdueTasksNotificationEmail from "../../emails/taskEmails/overdueTasksNotificationEmail.js";
-import { apiResponse, asyncHandler, Task, User } from "../allImports.js";
+import { Activity, apiResponse, asyncHandler, Task, User } from "../allImports.js";
 
 
 const sendOverdueEmailsToUsers = async (userIdsSet) => {
@@ -11,6 +11,14 @@ const sendOverdueEmailsToUsers = async (userIdsSet) => {
         const overdueCount = await Task.countDocuments({
             taskAssignedTo: userId,
             taskStatus: "Overdue"
+        });
+
+        await Activity.create({
+            messageType: "tasks_overdue",
+            message: "Your some tasks marked as overdue",
+            user: userId,
+            task: user.taskAssignedTo,
+            creatorName: "System"
         });
 
         if (overdueCount > 0) {
