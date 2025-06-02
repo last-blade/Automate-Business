@@ -3,7 +3,7 @@ import mongoose, { Schema } from "mongoose";
 const activitySchema = new Schema({
     messageType: {
         type: String,
-        enum: ["task_created", "comment_added", "task_deleted", "task_edited", "tasks_re-assigned", "tasks_overdue"],
+        enum: ["task_created", "comment_added", "task_deleted", "task_edited", "tasks_re-assigned", "tasks_overdue", "completed", "in-progress"],
         required: true
     },
 
