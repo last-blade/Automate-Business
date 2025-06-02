@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { apiError, apiResponse, asyncHandler, Task } from "../allImports.js";
 
-const filterTasks = asyncHandler(async (request, response) => {
+const filterTasksAssignedByMe = asyncHandler(async (request, response) => {
     const { taskCategory, taskPriority, taskStatus } = request.body;
 
     if (!taskCategory && !taskPriority && !taskStatus) {
@@ -23,15 +23,15 @@ const filterTasks = asyncHandler(async (request, response) => {
 //--------------------------------------------------------------------------------
 
     if (taskCategory) {
-        filter.taskCategory = taskCategory
+        filter.taskCategory = { $regex: new RegExp(`^${taskCategory}$`, "i") };
     };
 
     if (taskPriority) {
-        filter.taskPriority = taskPriority
+        filter.taskPriority = { $regex: new RegExp(`^${taskPriority}$`, "i") };
     };
 
     if (taskStatus) {
-        filter.taskStatus = taskStatus
+        filter.taskStatus = { $regex: new RegExp(`^${taskStatus}$`, "i") };
     };
 
     const filteredTasks = await Task.find(filter);
@@ -41,4 +41,4 @@ const filterTasks = asyncHandler(async (request, response) => {
     );
 });
 
-export { filterTasks };
+export { filterTasksAssignedByMe };
