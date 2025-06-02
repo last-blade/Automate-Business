@@ -36,7 +36,7 @@ const deleteTask = asyncHandler(async (request, response) => {
         message: `${foundTask.taskCreatedBy.fullname} deleted task: ${foundTask.taskTitle}`,
         creatorName: foundTask.taskCreatedBy.fullname,
         user: foundTask.taskAssignedTo._id,
-        task: foundTask._id,
+        task: taskId,
     });
 
     return response.status(200)
