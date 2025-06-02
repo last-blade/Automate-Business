@@ -37,9 +37,11 @@ const getUserActivities = asyncHandler(async (request, response) => {
         },
 
         {
-            $unwind: "$taskInfo"
+            $unwind: {
+                path: "$taskInfo",
+                preserveNullAndEmptyArrays: true
+            }
         },
-
 
         {
             $project: {
