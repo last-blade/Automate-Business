@@ -34,12 +34,12 @@ router.route("/delegated-tasks").get(authMiddleware, fetchDelegatedTasks);
 router.route("/categorized-tasks").get(authMiddleware, fetchCategorizedTasks);
 router.route("/categorywise-task-counting-assigned-to-me").get(authMiddleware, fetchCategorizedTasksCounting);
 router.route("/search-task").get(authMiddleware, searchTask);
-router.route("/filter-tasks").get(authMiddleware, filterTasksAssignedByMe);
+router.route("/filter-tasks").post(authMiddleware, filterTasksAssignedByMe);
 router.route("/assigned-to-me").get(authMiddleware, fetchTasksAssignedToMe);
 router.route("/all-tasks").get(authMiddleware, fetchDelegateAndAssignedToMeTasks);
 router.route("/my-assigned-cat-task-counts").get(authMiddleware, fetchCategorizedTasksCountingAssignedByMe);
 router.route("/total-categorized-tasks-counting").get(authMiddleware, totalCategorizedTasksCounting);
-router.route("/filter-tasks-assigned-to-me").get(authMiddleware, filterTasksAssignedToMe);
+router.route("/filter-tasks-assigned-to-me").post(authMiddleware, filterTasksAssignedToMe);
 
 //PUT
 router.route("/edit-task/:taskId").put(authMiddleware, handleMulterUpload("taskImage"), editTask);
