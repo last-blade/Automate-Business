@@ -10,13 +10,14 @@ import { fetchCategorizedTasksCounting } from "../controllers/taskControllers/fe
 import { editTask } from "../controllers/taskControllers/editTask.controller.js";
 import { searchTask } from "../controllers/taskControllers/searchTask.controller.js";
 import { reAssignAllTasks } from "../controllers/taskControllers/reAssignAllTasks.controller.js";
-import { filterTasks } from "../controllers/taskControllers/filterTasks.controller.js";
+import { filterTasksAssignedByMe } from "../controllers/taskControllers/filterTasksAssignedByMe.controller.js";
 import { fetchTasksAssignedToMe } from "../controllers/taskControllers/fetchTasksAssignedToMe.controller.js";
 import { fetchDelegateAndAssignedToMeTasks } from "../controllers/taskControllers/fetchDelegateAndAssignedToMeTasks.controller.js";
 import { fetchCategorizedTasksCountingAssignedByMe } from "../controllers/taskControllers/fetchCategorizedTasksCountingAssignedByMe.controller.js";
 import { totalCategorizedTasksCounting } from "../controllers/taskControllers/totalCategorizedTasksCounting.controller.js";
 import { checkAndSetOverdueStatus } from "../controllers/taskControllers/checkAndSetOverdueStatus.controller.js";
 import { handleMulterUpload } from "../middlewares/handleMulterUpload.middleware.js";
+import { filterTasksAssignedToMe } from "../controllers/taskControllers/filterTasksAssignedToMe.controller.js";
 
 
 const router = Router();
@@ -33,11 +34,12 @@ router.route("/delegated-tasks").get(authMiddleware, fetchDelegatedTasks);
 router.route("/categorized-tasks").get(authMiddleware, fetchCategorizedTasks);
 router.route("/categorywise-task-counting-assigned-to-me").get(authMiddleware, fetchCategorizedTasksCounting);
 router.route("/search-task").get(authMiddleware, searchTask);
-router.route("/filter-tasks").get(authMiddleware, filterTasks);
+router.route("/filter-tasks").get(authMiddleware, filterTasksAssignedByMe);
 router.route("/assigned-to-me").get(authMiddleware, fetchTasksAssignedToMe);
 router.route("/all-tasks").get(authMiddleware, fetchDelegateAndAssignedToMeTasks);
 router.route("/my-assigned-cat-task-counts").get(authMiddleware, fetchCategorizedTasksCountingAssignedByMe);
 router.route("/total-categorized-tasks-counting").get(authMiddleware, totalCategorizedTasksCounting);
+router.route("/filter-tasks-assigned-to-me").get(authMiddleware, filterTasksAssignedToMe);
 
 //PUT
 router.route("/edit-task/:taskId").put(authMiddleware, handleMulterUpload("taskImage"), editTask);
