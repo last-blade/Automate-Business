@@ -25,11 +25,11 @@ const createTask = asyncHandler(async (request, response) => {
         throw new apiError(400, "taskAssignedTo must be a valid MongoDB ObjectId");
     }
 
-    if (taskFrequency !== undefined && taskFrequency !== null) {
-        if (typeof taskFrequency !== "object" || !taskFrequency.type) {
-            throw new apiError(400, "If provided, taskFrequency must be an object with a 'type' field");
-        }
-    }
+    // if (taskFrequency !== undefined && taskFrequency !== null) {
+    //     if (typeof taskFrequency !== "object" || !taskFrequency.type) {
+    //         throw new apiError(400, "If provided, taskFrequency must be an object with a 'type' field");
+    //     }
+    // }
     
 
     // Upload image if provided
