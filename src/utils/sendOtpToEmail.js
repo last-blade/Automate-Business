@@ -17,7 +17,7 @@ const sendOtpToEmail = async (email, subject) => {
     const emailBody = `
         <div style="max-width: 600px; margin: auto; border: 1px solid #e0e0e0; border-radius: 8px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; background-color: #f9f9f9;">
         <div style="background-color: #0047AB; color: #fff; padding: 20px 30px; border-radius: 8px 8px 0 0;">
-            <h2 style="margin: 0; font-weight: 600;">KPS Automate Business Solutions</h2>
+            <h2 style="margin: 0; font-weight: 600;"> Jasmine Automate</h2>
             <p style="margin: 5px 0 0;">Secure Verification Code</p>
         </div>
 
@@ -35,11 +35,11 @@ const sendOtpToEmail = async (email, subject) => {
             <p style="font-size: 14px;">If you did not request this code, please ignore this email or contact support immediately.</p>
 
             <p style="margin-top: 40px; font-size: 14px;">Warm regards,</p>
-            <p style="font-weight: 600; font-size: 15px;">KPS Automate Business Solutions<br/>Enterprise Security Team</p>
+            <p style="font-weight: 600; font-size: 15px;">Jasmine Automate<br/>Enterprise Security Team</p>
         </div>
 
         <div style="background-color: #f1f1f1; color: #777; text-align: center; padding: 15px; border-top: 1px solid #ddd; border-radius: 0 0 8px 8px; font-size: 12px;">
-            <p style="margin: 0;">© ${new Date().getFullYear()} KPS Automate Business Solutions. All rights reserved.</p>
+            <p style="margin: 0;">© ${new Date().getFullYear()} Jasmine Automate. All rights reserved.</p>
         </div>
         </div>
     `;
