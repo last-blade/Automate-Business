@@ -8,7 +8,7 @@ const sendOTP = asyncHandler(async (request, response) => {
         throw new apiError(404, "Email is required for OTP")
     }
 
-    await sendOtpToEmail(email, "Your OTP for verification on KPS Automate Business Solutions");
+    await sendOtpToEmail(email, "Your OTP for verification on Jasmine Automate");
 
     const options = {
         httpOnly: true,
