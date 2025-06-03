@@ -1,12 +1,12 @@
 import { sendMail } from "../../utils/sendEmail.js";
 
 const myAccountDeletedEmail = async ({ fullname, email }) => {
-    const subject = `🗑️ Your KPS Account Has Been Deleted`;
+    const subject = `🗑️ Jasmine Automate`;
 
     const htmlBody = `
         <div style="max-width: 700px; margin: auto; border: 1px solid #ddd; border-radius: 8px; font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #fff; color: #333;">
             <div style="background-color: #d9534f; color: #fff; padding: 20px 30px; border-radius: 8px 8px 0 0;">
-            <h2 style="margin: 0;">KPS Automate Business Solutions</h2>
+            <h2 style="margin: 0;">Jasmine Automate</h2>
             <p style="margin: 4px 0 0;">🗑️ Account Deletion Confirmation</p>
             </div>
 
@@ -15,7 +15,7 @@ const myAccountDeletedEmail = async ({ fullname, email }) => {
 
             <p style="font-size: 15px;">
                 This email confirms that your account has been <strong>successfully deleted</strong> from 
-                <strong>KPS Automate Business Solutions</strong> as per your request.
+                <strong>Jasmine Automate</strong> as per your request.
             </p>
 
             <p style="margin-top: 15px;">
@@ -29,11 +29,11 @@ const myAccountDeletedEmail = async ({ fullname, email }) => {
             <p style="margin-top: 30px; font-size: 14px;">Wishing you the very best in all your endeavors.</p>
 
             <p style="margin-top: 30px; font-size: 14px;">Warm regards,</p>
-            <p style="font-weight: 600; font-size: 15px;">KPS Automate Business Solutions<br/>Support Team</p>
+            <p style="font-weight: 600; font-size: 15px;">Jasmine Automate<br/>Support Team</p>
             </div>
 
             <div style="background-color: #f9f9f9; text-align: center; padding: 15px; font-size: 12px; color: #999; border-top: 1px solid #ddd; border-radius: 0 0 8px 8px;">
-            <p style="margin: 0;">© ${new Date().getFullYear()} KPS Automate Business Solutions. All rights reserved.</p>
+            <p style="margin: 0;">© ${new Date().getFullYear()} Jasmine Automate. All rights reserved.</p>
             </div>
         </div>
     `;
