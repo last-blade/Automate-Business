@@ -1,7 +1,7 @@
 import { sendMail } from "../../utils/sendEmail.js";
 
 const userRegistrationEmail = async ({ fullname, email }) => {
-    const subject = `🎉 Welcome to KPS Automate Business Solutions!`;
+    const subject = `🎉 Welcome to Jasmine Automate!`;
 
     const htmlBody = `
     <div style="max-width: 700px; margin: auto; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; border: 1px solid #ddd; border-radius: 8px; background-color: #fff;">
@@ -11,7 +11,7 @@ const userRegistrationEmail = async ({ fullname, email }) => {
         <div style="padding: 30px; font-size: 16px; line-height: 1.5;">
             <p>Hi <strong>${fullname}</strong>,</p>
 
-            <p>Welcome to <strong>KPS Automate Business Solutions</strong>! 🎉 Your account has been successfully registered.</p>
+            <p>Welcome to <strong>Jasmine Automate</strong>! 🎉 Your account has been successfully registered.</p>
 
             <table style="border-collapse: collapse; margin: 20px 0; width: 100%;">
                 <tr>
@@ -24,10 +24,10 @@ const userRegistrationEmail = async ({ fullname, email }) => {
             <p>If you have any questions, feel free to reach out to our support team.</p>
 
             <p>Best regards,<br/>
-            <strong>KPS Automate Business Solutions</strong> Team</p>
+            <strong>Jasmine Automate</strong> Team</p>
         </div>
         <div style="background-color: #f9f9f9; color: #999; font-size: 12px; text-align: center; padding: 15px; border-top: 1px solid #ddd; border-radius: 0 0 8px 8px;">
-            <p style="margin: 0;">© ${new Date().getFullYear()} KPS Automate Business Solutions. All rights reserved.</p>
+            <p style="margin: 0;">© ${new Date().getFullYear()} Jasmine Automate. All rights reserved.</p>
         </div>
     </div>
     `;
