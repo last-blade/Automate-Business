@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Activity, apiError, apiResponse, asyncHandler, Task } from "../allImports.js";
+import { Activity, apiError, apiResponse, asyncHandler, Task, User } from "../allImports.js";
 import taskCreatedEmail from "../../emails/taskEmails/taskCreatedEmail.js";
 import { uploadOnCloudinary } from "../../utils/cloudinary.js";
 
@@ -64,6 +64,12 @@ const createTask = asyncHandler(async (request, response) => {
         taskData.taskFrequency = taskFrequency;
     }
 
+    const assignedUser = await User.findById(taskAssignedTo);
+    if (!assignedUser) {
+        throw new apiError(404, "Assigned user not found");
+    }
+
+
     const newTask = await Task.create(taskData);
 
     const createdTask = await Task.findById(newTask._id).populate("taskAssignedTo", "fullname email taskDueDate").populate("taskCreatedBy", "fullname email");
@@ -74,7 +80,7 @@ const createTask = asyncHandler(async (request, response) => {
 
     const taskAssignedToUser = createdTask.taskAssignedTo;
 
-    await taskCreatedEmail({taskTitle, assigneeName: taskAssignedToUser.fullname, assigneeEmail: taskAssignedToUser.email, dueDate: taskDueDate})
+    await taskCreatedEmail({taskTitle, assigneeName: taskAssignedToUser.fullname, assigneeEmail: taskAssignedToUser.email, dueDate: taskDueDate, taskDescription, taskPriority, taskCategory})
 
     await Activity.create({
         messageType: "task_created",
