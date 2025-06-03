@@ -18,10 +18,10 @@ const overdueTasksNotificationEmail = async ({ fullname, email, totalOverdueTask
             <p>If you have questions or believe this is an error, kindly reach out to your project supervisor.</p>
 
             <p>Stay on track,<br/>
-            <strong>KPS Automate Business Solutions</strong> Team</p>
+            <strong>Jasmine Automate</strong> Team</p>
         </div>
         <div style="background-color: #f9f9f9; color: #999; font-size: 12px; text-align: center; padding: 15px; border-top: 1px solid #ddd; border-radius: 0 0 8px 8px;">
-            <p style="margin: 0;">© ${new Date().getFullYear()} KPS Automate Business Solutions. All rights reserved.</p>
+            <p style="margin: 0;">© ${new Date().getFullYear()} Jasmine Automate. All rights reserved.</p>
         </div>
     </div>
     `;
