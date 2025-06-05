@@ -14,7 +14,7 @@ const sendOTP = asyncHandler(async (request, response) => {
         httpOnly: true,
         secure: true,
         sameSite: "None",
-        maxAge: 2 * 60 * 1000,
+        maxAge: 1 * 60 * 1000,
     };
 
     return response.status(200)
