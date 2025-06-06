@@ -6,6 +6,7 @@ const handleMulterUpload = (fieldName = "taskImage") => {
     upload.single(fieldName)(req, res, function (err) {
       console.log("fieldname", fieldName)
       if (err instanceof multer.MulterError) {
+        console.log("err1", err)
         if (err.code === "LIMIT_FILE_SIZE") {
           return res.status(400).json({
             success: false,
@@ -18,6 +19,7 @@ const handleMulterUpload = (fieldName = "taskImage") => {
           message: `Multer error: ${err.message}`,
         });
       } else if (err) {
+        console.log("err2", err)
         return res.status(500).json({
           success: false,
           message: "Unexpected error during file upload",
