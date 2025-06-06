@@ -31,6 +31,10 @@ const createTask = asyncHandler(async (request, response) => {
     //     }
     // }
     
+    const assignedUser = await User.findById(taskAssignedTo);
+    if (!assignedUser) {
+        throw new apiError(404, "Assigned user not found");
+    }
 
     // Upload image if provided
     let taskImage = null;
@@ -63,12 +67,6 @@ const createTask = asyncHandler(async (request, response) => {
     if (taskFrequency) {
         taskData.taskFrequency = taskFrequency;
     }
-
-    const assignedUser = await User.findById(taskAssignedTo);
-    if (!assignedUser) {
-        throw new apiError(404, "Assigned user not found");
-    }
-
 
     const newTask = await Task.create(taskData);
 
