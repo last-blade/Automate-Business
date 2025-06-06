@@ -1,5 +1,6 @@
 import { v2 as cloudinary } from 'cloudinary';
 import fs from "fs";
+import path from 'path';
 
 
 cloudinary.config({ 
@@ -21,11 +22,11 @@ const uploadOnCloudinary = async (localFilepath) => {
             })
             
             // console.log("File uploaded successfully on cloudinary!!", response);
-            fs.unlinkSync(localFilepath);
+            fs.unlinkSync(path.resolve(localFilepath));
             return response;
         }
     } catch (error) {
-        fs.unlinkSync(localFilepath) // jo humne apne server par local file save karayi thi usko hum delete kar denge, kyoki cloudinary par file upload nahin ho paayi hai, and hum delete iliye kar rahe hain kyoki user firse file upload karega toh fir wahi same file dobara se mere local server par aa jaayegi, aise data badhta rahega
+        fs.unlinkSync(path.resolve(localFilepath)); // jo humne apne server par local file save karayi thi usko hum delete kar denge, kyoki cloudinary par file upload nahin ho paayi hai, and hum delete iliye kar rahe hain kyoki user firse file upload karega toh fir wahi same file dobara se mere local server par aa jaayegi, aise data badhta rahega
         return null;
     }
 }
