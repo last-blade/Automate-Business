@@ -10,7 +10,7 @@ const verifyOTP = asyncHandler(async (request, response) => {
     }
 
     if(!email){
-        throw new apiError(404, "Email not found!")
+        throw new apiError(404, "OTP expired, send OTP again!")
     }
 
     if(!incomingOTP){
