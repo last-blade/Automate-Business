@@ -1,11 +1,12 @@
+import ticketStatusChangedEmail from "../../emails/userEmails/ticketStatusChangedEmail.js";
 import { apiError, asyncHandler, Support } from "../allImports.js";
 
 const changeTicketStatus = asyncHandler(async (request, response) => {
     const ticketStatus = request.body;
 
-    const {tickedId} = request?.params;
+    const {ticketId} = request?.params;
 
-    if(!tickedId){
+    if(!ticketId){
         throw new apiError(404, "Ticket ID not found")
     }
 
@@ -13,16 +14,23 @@ const changeTicketStatus = asyncHandler(async (request, response) => {
         throw new apiError(404, "Ticket status not changed")
     }
 
-    const foundTicket = await Support.findById(tickedId);
+    const foundTicket = await Support.findById(ticketId).populate("ticketCreatedBy", "fullname email");
 
     if(!foundTicket){
         throw new apiError(404, "Ticket not found")
     }
 
-    await Support.findByIdAndUpdate(tickedId, {
+    await Support.findByIdAndUpdate(ticketId, {
         $set: {
             ticketStatus: ticketStatus.ticketStatus
         }
+    });
+
+    await ticketStatusChangedEmail({
+        fullname: foundTicket.ticketCreatedBy.fullname || "User",
+        email: foundTicket.ticketCreatedBy.email,
+        ticketId: foundTicket.ticketId,
+        newStatus: ticketStatus.ticketStatus,
     });
 
     return response.sendStatus(200);
