@@ -10,7 +10,7 @@ import { getAllTickets } from "../controllers/supportControllers/getAllTickets.c
 const router = Router();
 
 //POST
-router.route("/rasie-ticket").post(authMiddleware, handleMulterUpload("attachFile"), raiseTicket);
+router.route("/raise-ticket").post(authMiddleware, handleMulterUpload("attachFile"), raiseTicket);
 
 //PATCH
 router.route("/change-ticket-status/:ticketId").patch(authMiddleware, authorizeRoles("Support"), changeTicketStatus);
