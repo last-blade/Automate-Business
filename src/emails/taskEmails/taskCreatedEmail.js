@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 
 const taskCreatedEmail = async ({ taskTitle, assigneeName, assigneeEmail, dueDate, taskDescription, taskPriority, taskCategory, taskImage }) => {
     const subject = "📝 New Task Assigned - Jasmine Automate";
-
+console.log("taskimage",taskImage)
     const formattedDueDate = dueDate ? dayjs(dueDate).format("D MMMM YYYY") : null;
 
     const htmlBody = `
