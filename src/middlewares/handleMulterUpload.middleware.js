@@ -4,7 +4,6 @@ import multer from "multer";
 const handleMulterUpload = (fieldName = "taskImage") => {
   return (req, res, next) => {
     upload.single(fieldName)(req, res, function (err) {
-      console.log("fieldname", fieldName)
       if (err instanceof multer.MulterError) {
         console.log("err1", err)
         if (err.code === "LIMIT_FILE_SIZE") {
