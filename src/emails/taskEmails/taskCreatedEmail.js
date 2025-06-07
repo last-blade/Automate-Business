@@ -1,7 +1,7 @@
 import { sendMail } from "../../utils/sendEmail.js";
 import dayjs from "dayjs";
 
-const taskCreatedEmail = async ({ taskTitle, assigneeName, assigneeEmail, dueDate, taskDescription, taskPriority, taskCategory }) => {
+const taskCreatedEmail = async ({ taskTitle, assigneeName, assigneeEmail, dueDate, taskDescription, taskPriority, taskCategory, taskImage }) => {
     const subject = "📝 New Task Assigned - Jasmine Automate";
 
     const formattedDueDate = dueDate ? dayjs(dueDate).format("D MMMM YYYY") : null;
@@ -41,6 +41,15 @@ const taskCreatedEmail = async ({ taskTitle, assigneeName, assigneeEmail, dueDat
                 </tr>
                 ` : ''}
             </table>
+
+            ${
+                taskImage
+                ? `<div style="margin-top: 30px;">
+                    <p><strong>Attached Image:</strong></p>
+                    <img src="${taskImage}" alt="Task Image" style="max-width: 100%; border: 1px solid #ccc; border-radius: 6px;" />
+                </div>`
+                : ""
+            }
 
             <p style="margin-top: 30px; font-size: 14px;">Please log in to your Jasmine Automate dashboard to view and manage this task promptly.</p>
 
