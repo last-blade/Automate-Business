@@ -16,10 +16,9 @@ const uploadOnCloudinary = async (localFilepath) => {
         }
 
         else{
-            const isRaw = mimeType === "application/pdf" || mimeType === "application/msword" || mimeType.startsWith("application/");
             //uplaoding file on cloudinary by taking the local file path when user uploads file on the server, but hum iss file ko temporarily apne server par store rakhenge jab tak ki file cloudinary par upload naa ho jaaye, jaise hi uplaod hogi, fir um apne server se delete kar denge file ko.
             const response = await cloudinary.uploader.upload(localFilepath, {
-                resource_type: isRaw ? "raw" : "auto",
+                resource_type: "auto",
             })
             
             // console.log("File uploaded successfully on cloudinary!!", response);
