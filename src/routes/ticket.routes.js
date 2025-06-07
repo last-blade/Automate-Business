@@ -4,6 +4,8 @@ import { raiseTicket } from "../controllers/supportControllers/raiseTicket.contr
 import { handleMulterUpload } from "../middlewares/handleMulterUpload.middleware.js";
 import { authorizeRoles } from "../middlewares/autorizeRoles.middleware.js";
 import { changeTicketStatus } from "../controllers/supportControllers/changeTicketStatus.controller.js";
+import { getUserTickets } from "../controllers/supportControllers/getUserTickets.controller.js";
+import { getAllTickets } from "../controllers/supportControllers/getAllTickets.controller.js";
 
 const router = Router();
 
@@ -12,5 +14,9 @@ router.route("/rasie-ticket").post(authMiddleware, handleMulterUpload("attachFil
 
 //PATCH
 router.route("/change-ticket-status/:ticketId").patch(authMiddleware, authorizeRoles("Support"), changeTicketStatus);
+
+//GET
+router.route("/get-user-tickets").get(authMiddleware, getUserTickets);
+router.route("/get-all-tickets").get(authMiddleware, authorizeRoles("Support"), getAllTickets);
 
 export default router;
