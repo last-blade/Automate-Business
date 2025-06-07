@@ -1,6 +1,6 @@
 import { sendMail } from "../../utils/sendEmail.js";
 
-const ticketRaisedEmail = async ({ fullname, email, subject, category, priority }) => {
+const ticketRaisedEmail = async ({ fullname, email, subject, category, priority, ticketId }) => {
     const mailSubject = `📩 Support Ticket Raised Successfully`;
 
     const htmlBody = `
@@ -16,6 +16,7 @@ const ticketRaisedEmail = async ({ fullname, email, subject, category, priority 
 
                 <p><strong>Ticket Details:</strong></p>
                 <ul style="padding-left: 20px;">
+                    <li><strong>🎫 Ticket ID:</strong> ${ticketId}</li>
                     <li><strong>📌 Subject:</strong> ${subject}</li>
                     <li><strong>📂 Category:</strong> ${category}</li>
                     <li><strong>⚠️ Priority:</strong> ${priority}</li>
@@ -24,11 +25,11 @@ const ticketRaisedEmail = async ({ fullname, email, subject, category, priority 
                 <p>If you need to provide more information or attachments, feel free to reply to this email or reach out to the support team.</p>
 
                 <p>Thank you,<br/>
-                <strong>Jasmine Automate</strong> Team</p>
+                <strong>Jasmine Automate Support</strong> Team</p>
             </div>
 
             <div style="background-color: #f9f9f9; color: #999; font-size: 12px; text-align: center; padding: 15px; border-top: 1px solid #ddd; border-radius: 0 0 8px 8px;">
-                <p style="margin: 0;">© ${new Date().getFullYear()} Jasmine Automate Support. All rights reserved.</p>
+                <p style="margin: 0;">© ${new Date().getFullYear()} Jasmine Automate. All rights reserved.</p>
             </div>
         </div>
     `;
