@@ -38,7 +38,8 @@ const raiseTicket = asyncHandler(async (request, response) => {
         email: request.user.email,
         subject,
         category,
-        priority
+        priority,
+        ticketId: newTicket.ticketId,
     });
 
     return response.status(201)
