@@ -1,3 +1,4 @@
+import ticketRaisedEmail from "../../emails/userEmails/ticketRaisedEmail.js";
 import { uploadOnCloudinary } from "../../utils/cloudinary.js";
 import { apiError, apiResponse, asyncHandler, Support } from "../allImports.js";
 
@@ -30,6 +31,14 @@ const raiseTicket = asyncHandler(async (request, response) => {
         description, 
         attachFile,
         ticketCreatedBy: request.user.id,
+    });
+
+    await ticketRaisedEmail({
+        fullname: request.user.fullname || "User",
+        email: request.user.email,
+        subject,
+        category,
+        priority
     });
 
     return response.status(201)
