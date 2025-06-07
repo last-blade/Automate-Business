@@ -21,7 +21,7 @@ const ticketStatusChangedEmail = async ({ fullname, email, ticketId, newStatus }
                 <p>If you have any questions or further concerns, feel free to respond to this email or reach out to our support team.</p>
 
                 <p>Thank you,<br/>
-                <strong>Jasmine Automate Support/strong> Team</p>
+                <strong>Jasmine Automate Support</strong> Team</p>
             </div>
 
             <div style="background-color: #f9f9f9; color: #999; font-size: 12px; text-align: center; padding: 15px; border-top: 1px solid #ddd; border-radius: 0 0 8px 8px;">
@@ -30,7 +30,7 @@ const ticketStatusChangedEmail = async ({ fullname, email, ticketId, newStatus }
         </div>
     `;
 
-    await sendMail(email, subject, htmlBody);
+    await sendMail(email, subject, htmlBody, {type: "support"});
 };
 
 export default ticketStatusChangedEmail;
