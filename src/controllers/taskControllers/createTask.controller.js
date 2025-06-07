@@ -78,8 +78,8 @@ const createTask = asyncHandler(async (request, response) => {
 
     const taskAssignedToUser = createdTask.taskAssignedTo;
 
-    await taskCreatedEmail({taskTitle, assigneeName: taskAssignedToUser.fullname, assigneeEmail: taskAssignedToUser.email, dueDate: taskDueDate, taskDescription, taskPriority, taskCategory, taskImage: createdTask?.url})
-
+    await taskCreatedEmail({taskTitle, assigneeName: taskAssignedToUser.fullname, assigneeEmail: taskAssignedToUser.email, dueDate: taskDueDate, taskDescription, taskPriority, taskCategory, taskImage: createdTask.taskImage?.url})
+console.log(createTask.taskImage.url)
     await Activity.create({
         messageType: "task_created",
         message: `${createdTask.taskCreatedBy.fullname} created task: ${createdTask.taskTitle}`,
