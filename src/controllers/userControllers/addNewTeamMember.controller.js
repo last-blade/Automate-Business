@@ -2,9 +2,9 @@ import sendWelcomeEmail from "../../emails/userEmails/sendWelcomeEmail.js";
 import { apiError, apiResponse, asyncHandler, NewMember, User } from "../allImports.js";
 
 const addNewTeamMember = asyncHandler(async (request, response) => {
-    const {fullname, email, whatsappNumber, accountType, password} = request.body;
+    const {fullname, email, whatsappNumber, department, accountType, password} = request.body;
 
-    if([fullname, email, whatsappNumber, accountType, password].some(inputField => inputField === undefined || inputField.toString().trim() === "")){
+    if([fullname, email, whatsappNumber, department, accountType, password].some(inputField => inputField === undefined || inputField.toString().trim() === "")){
         throw new apiError(404, "All fields are required")
     }
 
@@ -19,6 +19,7 @@ const addNewTeamMember = asyncHandler(async (request, response) => {
         email, 
         whatsappNumber, 
         accountType, 
+        department,
         // reportingManager, 
         password,
     });
