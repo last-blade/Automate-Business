@@ -9,11 +9,17 @@ const fetchTasksAssignedToMe = asyncHandler(async (request, response) => {
     const limit = parseInt(request.query.limit) || 10;
     const skip = (page - 1) * 10;
 
+    const filter = {
+        taskAssignedTo: new mongoose.Types.ObjectId(userId)
+    }
+
+    const totalTasks = await Task.countDocuments(filter);
+
     const myTasksAssignedByLeader = await Task.aggregate([
         {
-            $match: {
-                taskAssignedTo: new mongoose.Types.ObjectId(userId)
-            }
+            $match: 
+                filter
+            
         },
 
         {
@@ -38,13 +44,13 @@ const fetchTasksAssignedToMe = asyncHandler(async (request, response) => {
     if(myTasksAssignedByLeader.length === 0){
         return response.status(200)
         .json(
-            new apiResponse(200, myTasksAssignedByLeader, "No task assigned to you")
+            new apiResponse(200, {}, "No task assigned to you")
         )
     }
 
     return response.status(200)
     .json(
-        new apiResponse(200, myTasksAssignedByLeader, "Task assigned to you fetched successfully")
+        new apiResponse(200, {page, totalPages: Math.ceil(totalTasks/limit), myTasksAssignedByLeader}, "Task assigned to you fetched successfully")
     )
 
 });
