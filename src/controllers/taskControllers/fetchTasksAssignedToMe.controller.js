@@ -17,9 +17,7 @@ const fetchTasksAssignedToMe = asyncHandler(async (request, response) => {
 
     const myTasksAssignedByLeader = await Task.aggregate([
         {
-            $match: 
-                filter
-            
+            $match: filter
         },
 
         {
