@@ -9,11 +9,15 @@ const fetchDelegatedTasks = asyncHandler(async (request, response) => {
     const page = parseInt(request.query.page) || 1;
     const skip = (page - 1) * limit;
 
+    const filter = {
+        taskCreatedBy: new mongoose.Types.ObjectId(userId)
+    };
+
+    const totalTasks = await Task.countDocuments(filter);
+
     const allTasks = await Task.aggregate([
         {
-            $match: {
-                taskCreatedBy: new mongoose.Types.ObjectId(userId)
-            }
+            $match: filter ,
         },
 
         {
@@ -38,7 +42,7 @@ const fetchDelegatedTasks = asyncHandler(async (request, response) => {
 
     return response.status(200)
     .json(
-        new apiResponse(200, allTasks, "All tasks fetched successfully")
+        new apiResponse(200, {page, totalPages: Math.ceil(totalTasks/limit), allTasks}, "All tasks fetched successfully")
     )
 });
 
