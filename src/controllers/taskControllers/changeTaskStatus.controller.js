@@ -39,7 +39,7 @@ const changeTaskStatus = asyncHandler(async (request, response) => {
     });
 
     await Activity.create({
-        messageType: "completed",
+        messageType: status.status,
         message: `${taskAssignedTo.fullname} marked '${taskTitle}' as ${taskStatus}`,
         user: updatedTask.taskCreatedBy,
         task: taskId,
