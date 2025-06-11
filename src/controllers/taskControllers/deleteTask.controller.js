@@ -9,7 +9,7 @@ const deleteTask = asyncHandler(async (request, response) => {
         throw new apiError(404, "Task id not found!")
     }
 
-    const foundTask = await Task.findById(taskId).populate("taskAssignedTo", "fullname email").populate("taskCreatedBy", "fullname");
+    const foundTask = await Task.findById(taskId).populate("taskAssignedTo", "fullname email").populate("taskCreatedBy", "fullname _id");
 
     if(!foundTask){
         return response.status(404)
@@ -18,7 +18,7 @@ const deleteTask = asyncHandler(async (request, response) => {
         )
     }
 
-    if(foundTask.taskCreatedBy !== request.user.id){
+    if(foundTask.taskCreatedBy._id !== request.user.id){
         throw new apiError(403, "Access denied")
     }
 
