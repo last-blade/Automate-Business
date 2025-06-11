@@ -35,7 +35,7 @@ const fetchTasksAssignedToMe = asyncHandler(async (request, response) => {
         },
 
         {
-            $project: {_id: 0, __v: 0, taskAssignedTo: 0}
+            $project: {__v: 0, taskAssignedTo: 0}
         }
     ]);
 
