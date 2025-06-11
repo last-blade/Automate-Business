@@ -29,7 +29,7 @@ const fetchDelegatedTasks = asyncHandler(async (request, response) => {
         },
 
         {
-            $project: {__v: 0, _id: 0}
+            $project: {__v: 0}
         },
     ]);
 
