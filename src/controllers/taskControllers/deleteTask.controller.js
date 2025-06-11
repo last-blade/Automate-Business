@@ -1,6 +1,6 @@
 import taskDeletedEmail from "../../emails/taskEmails/taskDeletedEmail.js";
 import { deleteFromCloudinary } from "../../utils/cloudinary.js";
-import { Activity, apiError, apiResponse, asyncHandler, Task } from "../allImports.js";
+import { Activity, apiResponse, asyncHandler, Task } from "../allImports.js";
 
 const deleteTask = asyncHandler(async (request, response) => {
     const {taskId} = request?.params;
@@ -9,18 +9,14 @@ const deleteTask = asyncHandler(async (request, response) => {
         throw new apiError(404, "Task id not found!")
     }
 
-    const foundTask = await Task.findById(taskId).populate("taskAssignedTo", "fullname email").populate("taskCreatedBy", "fullname _id");
+    const foundTask = await Task.findById(taskId).populate("taskAssignedTo", "fullname email").populate("taskCreatedBy", "fullname");
 
     if(!foundTask){
         return response.status(404)
         .json(
             new apiResponse(404, {}, "Task not found, task may be deleted")
         )
-    }
-
-    if(foundTask.taskCreatedBy._id !== request.user.id){
-        throw new apiError(403, "Access denied")
-    }
+    }z
 
     await Task.findByIdAndDelete(taskId);
 
