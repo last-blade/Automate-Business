@@ -1,5 +1,5 @@
 import overdueTasksNotificationEmail from "../../emails/taskEmails/overdueTasksNotificationEmail.js";
-import { Activity, apiResponse, asyncHandler, Task, User } from "../allImports.js";
+import { Activity, asyncHandler, Task, User } from "../allImports.js";
 
 
 const sendOverdueEmailsToUsers = async (userIdsSet) => {
