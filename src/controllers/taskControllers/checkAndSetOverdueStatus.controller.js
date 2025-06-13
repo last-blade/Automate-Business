@@ -32,7 +32,7 @@ const sendOverdueEmailsToUsers = async (userIdsSet) => {
 };
 
 
-const checkAndSetOverdueStatus = asyncHandler(async (request, response) => {
+const checkAndSetOverdueStatus = asyncHandler(async (_, response) => {
     const currentDate = new Date();
 
     const allTasks = await Task.find({
