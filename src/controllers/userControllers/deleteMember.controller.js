@@ -22,7 +22,7 @@ const deleteMember = asyncHandler(async (request, response) => {
         newMember: memberId,
     });
 
-    await User.findByIdAndDelete(memberId);
+    // await User.findByIdAndDelete(memberId);
 
     await Task.deleteMany({
         taskAssignedTo: memberId,

@@ -1,3 +1,4 @@
+import { sendExistedMemberWelcomeEmail } from "../../emails/userEmails/sendExistedMemberWelcomeEmail.js";
 import sendWelcomeEmail from "../../emails/userEmails/sendWelcomeEmail.js";
 import { apiError, apiResponse, asyncHandler, NewMember, User } from "../allImports.js";
 
@@ -11,7 +12,33 @@ const addNewTeamMember = asyncHandler(async (request, response) => {
     const foundUser = await User.findOne({email: email});
 
     if(foundUser){
-        throw new apiError(400, "User with this email or whatsapp number already exists")
+        // throw new apiError(400, "User with this email or whatsapp number already exists")
+
+        const foundTeamMeberInLoggedInUsers = await NewMember.find({
+            newMemberCreatedBy: request.user?.id,
+            newMember: foundUser._id,
+        });
+
+        if(foundTeamMeberInLoggedInUsers){
+            throw new apiError(400, "User already exists in your team")
+        }
+
+        const newTeamMember = await NewMember.create({
+            newMemberCreatedBy: request.user?.id,
+            newMember: foundUser._id,
+        });
+
+        const foundNewMember = await NewMember.findById(newTeamMember._id).populate("newMemberCreatedBy", "fullname");
+
+        if(!foundNewMember){
+            throw new apiError(500, "Something went wrong, while adding a new member")
+        }
+        await sendExistedMemberWelcomeEmail({ fullname, email, createdBy: foundNewMember.newMemberCreatedBy.fullname});
+
+        return response.status(201)
+        .json(
+            new apiResponse(201, foundUser, "New team member added successfully")
+        )
     }
 
     const createdUser = await User.create({
