@@ -16,7 +16,7 @@ const sendExistedMemberWelcomeEmail = async({fullname, email, createdBy}) => {
             <p>You can now collaborate, view tasks, and stay in sync with your team’s goals.</p>
 
             <div style="text-align: center; margin: 30px 0;">
-            <a href="www.example.com" style="background-color: #4CAF50; color: white; padding: 12px 20px; text-decoration: none; font-weight: bold; border-radius: 6px;">Go to Dashboard</a>
+            <a href="https://jasmineautomate.vercel.app/" style="background-color: #4CAF50; color: white; padding: 12px 20px; text-decoration: none; font-weight: bold; border-radius: 6px;">Go to Dashboard</a>
             </div>
 
             <p>If you have any questions or face any issues, feel free to reach out to our support team.</p>
