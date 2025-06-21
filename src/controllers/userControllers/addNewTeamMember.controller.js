@@ -11,9 +11,9 @@ const addNewTeamMember = asyncHandler(async (request, response) => {
 
     const foundUser = await User.findOne({email: email});
 
-    if(foundUser._id.toString() === request.user.id){
-        throw new apiError(400, "You cannot add yourself in team")
-    }
+    // if(foundUser._id.toString() === request.user.id){
+    //     throw new apiError(400, "You cannot add yourself in team")
+    // }
 
     if(foundUser){
         // throw new apiError(400, "User with this email or whatsapp number already exists")
