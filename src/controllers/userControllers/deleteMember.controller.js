@@ -1,5 +1,5 @@
-import accountDeletedEmail from "../../emails/userEmails/accountDeletedEmail.js";
-import { apiError, apiResponse, asyncHandler, NewMember, Task, User } from "../allImports.js";
+import teamMemberRemoveEmail from "../../emails/userEmails/teamMemberRemoveEmail.js";
+import { apiError, apiResponse, asyncHandler, NewMember, Task } from "../allImports.js";
 
 const deleteMember = asyncHandler(async (request, response) => {
     const {memberId} = request?.params;
@@ -26,11 +26,13 @@ const deleteMember = asyncHandler(async (request, response) => {
 
     await Task.deleteMany({
         taskAssignedTo: memberId,
+        taskCreatedBy: request.user?.id,
     });
 
-    await accountDeletedEmail({
+    await teamMemberRemoveEmail({
         fullname: foundMember.newMember.fullname,
         email: foundMember.newMember.email,
+        removedBy: request.user.fullname,
     });
 
     return response.status(200)

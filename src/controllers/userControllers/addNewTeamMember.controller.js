@@ -19,7 +19,7 @@ const addNewTeamMember = asyncHandler(async (request, response) => {
             newMember: foundUser._id,
         });
 
-        if(foundTeamMeberInLoggedInUsers){
+        if(foundTeamMeberInLoggedInUsers.length > 0){
             throw new apiError(400, "User already exists in your team")
         }
 
