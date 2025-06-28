@@ -21,7 +21,7 @@ const taskReAssignedEmail = async ({ newAssigneeName, newAssigneeEmail, oldUserE
             <p style="margin-top: 15px;">Please log in to your dashboard to review and take action on these tasks.</p>
 
             <div style="margin-top: 25px; text-align: center;">
-                <a href="https://your-app-domain.com/dashboard" 
+                <a href="https://jasmineautomate.vercel.app/" 
                 style="background-color: #1976D2; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600;">
                 🔗 Go to Dashboard
                 </a>
