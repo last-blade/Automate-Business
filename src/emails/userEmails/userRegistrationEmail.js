@@ -21,6 +21,14 @@ const userRegistrationEmail = async ({ fullname, email }) => {
             </table>
 
             <p>You can now log in to your account and start exploring the platform.</p>
+
+            <div style="margin-top: 25px; text-align: center;">
+                <a href="https://jasmineautomate.vercel.app/" 
+                style="background-color: #4CAF50; color: #fff; text-decoration: none; padding: 12px 20px; border-radius: 6px; display: inline-block; font-weight: bold;">
+                Go to Dashboard
+                </a>
+            </div>
+            
             <p>If you have any questions, feel free to reach out to our support team.</p>
 
             <p>Best regards,<br/>
