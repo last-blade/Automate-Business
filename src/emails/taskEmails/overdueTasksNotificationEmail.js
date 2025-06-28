@@ -15,6 +15,13 @@ const overdueTasksNotificationEmail = async ({ fullname, email, totalOverdueTask
 
             <p>Please log in to your dashboard and review these tasks to take appropriate actions.</p>
 
+            <div style="margin-top: 25px; text-align: center;">
+                <a href="https://jasmineautomate.vercel.app/" 
+                style="background-color: #FF5722; color: #fff; text-decoration: none; padding: 12px 20px; border-radius: 6px; display: inline-block; font-weight: bold;">
+                Go to Dashboard
+                </a>
+            </div>
+
             <p>If you have questions or believe this is an error, kindly reach out to your project supervisor.</p>
 
             <p>Stay on track,<br/>
