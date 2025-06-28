@@ -76,6 +76,15 @@ const taskEditedEmail = async ({
                 </tbody>
             </table>
 
+            <p style="margin-top: 30px; font-size: 14px;">Please log in to your Jasmine Automate dashboard to view and manage this task promptly.</p>
+
+            <div style="margin-top: 25px; text-align: center;">
+                <a href="https://jasmineautomate.vercel.app/" 
+                style="background-color: #1976D2; color: #fff; text-decoration: none; padding: 12px 20px; border-radius: 6px; display: inline-block; font-weight: bold;">
+                Go to Dashboard
+                </a>
+            </div>
+
             <p style="margin-top: 25px; font-size: 14px;">If you have any questions or concerns, please connect with your team lead or manager.</p>
 
             <p style="margin-top: 30px; font-size: 14px;">Warm regards,</p>
