@@ -24,6 +24,13 @@ const sendWelcomeEmail = async ({ fullname, email, password, createdBy }) => {
             ⚠️ Please change your password immediately after logging in to keep your account secure.
             </p>
 
+            <div style="margin-top: 25px; text-align: center;">
+                <a href="https://jasmineautomate.vercel.app/" 
+                style="background-color: #4CAF50; color: #fff; text-decoration: none; padding: 12px 20px; border-radius: 6px; display: inline-block; font-weight: bold;">
+                Go to Dashboard
+                </a>
+            </div>
+
             <p>Get started by logging in and exploring your dashboard. If you have any questions, feel free to reach out to our support team.</p>
 
             <p>Best regards,<br/>
