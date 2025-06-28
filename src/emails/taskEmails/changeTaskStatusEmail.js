@@ -26,6 +26,13 @@ const changeTaskStatusEmail = async ({ taskTitle, assigneeName, assigneeEmail, n
             </table>
 
             <p style="margin-top: 30px; font-size: 14px;">Please log in to your dashboard to view more information or take any further actions.</p>
+            
+            <div style="margin-top: 25px; text-align: center;">
+                <a href="https://jasmineautomate.vercel.app/" 
+                style="background-color: #0047AB; color: #fff; text-decoration: none; padding: 12px 20px; border-radius: 6px; display: inline-block; font-weight: bold;">
+                Go to Dashboard
+                </a>
+            </div>
 
             <p style="margin-top: 40px; font-size: 14px;">Warm regards,</p>
             <p style="font-weight: 600; font-size: 15px;">Jasmine Automate<br/>Productivity & Workflow Team</p>
