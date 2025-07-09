@@ -41,9 +41,12 @@ const checkAndSetOverdueStatus = asyncHandler(async (_, response) => {
     });
 
     const userIdsSet = new Set();
-    allTasks.forEach(task => {
-        userIdsSet.add(task.taskAssignedTo.toString());
-    });
+
+    if(allTasks.length > 0){
+        allTasks.forEach(task => {
+            userIdsSet.add(task.taskAssignedTo.toString());
+        });
+    }
 
     await Task.updateMany(
         { 
@@ -53,7 +56,9 @@ const checkAndSetOverdueStatus = asyncHandler(async (_, response) => {
         { $set: { taskStatus: "Overdue" } }
     );
 
-    await sendOverdueEmailsToUsers(userIdsSet);
+    if(userIdsSet.size > 0){
+        await sendOverdueEmailsToUsers(userIdsSet);
+    }
 
     return response.sendStatus(200);
 });
