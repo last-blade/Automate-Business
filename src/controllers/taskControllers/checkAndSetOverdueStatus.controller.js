@@ -42,7 +42,7 @@ const checkAndSetOverdueStatus = asyncHandler(async (request, response) => {
     });
 
     const userIdsSet = new Set();
-console.log("alltasks", allTasks)
+
     if(allTasks.length > 0){
         allTasks.forEach(task => {
             userIdsSet.add(task.taskAssignedTo.toString());
