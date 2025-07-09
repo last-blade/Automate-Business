@@ -32,12 +32,13 @@ const sendOverdueEmailsToUsers = async (userIdsSet) => {
 };
 
 
-const checkAndSetOverdueStatus = asyncHandler(async (_, response) => {
+const checkAndSetOverdueStatus = asyncHandler(async (request, response) => {
     const currentDate = new Date();
 
     const allTasks = await Task.find({
         taskDueDate: { $lt: currentDate },
-        taskStatus: { $in: ["Pending", "In Progress"] }
+        taskStatus: { $in: ["Pending", "In Progress"] },
+        taskCreatedBy: request.user.id,
     });
 
     const userIdsSet = new Set();
