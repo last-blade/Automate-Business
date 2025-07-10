@@ -1,3 +1,4 @@
+import commentNotificationEmail from "../../emails/taskEmails/commentNotificationEmail.js";
 import { Activity, apiError, apiResponse, asyncHandler, Comment, Task } from "../allImports.js";
 
 const createComment = asyncHandler(async (request, response) => {
@@ -42,6 +43,29 @@ const createComment = asyncHandler(async (request, response) => {
         user: foundTask.taskAssignedTo._id,
         task: foundTask._id,
     });
+
+    //Kis user ko notify karna hai, deciding here.
+    const commenterId = request.user.id;
+    const assigner = foundTask.taskCreatedBy;
+    const assignee = foundTask.taskAssignedTo;
+
+    let receiver = null;
+
+    if (commenterId === assigner._id.toString()) {
+        receiver = assignee;
+    } else if (commenterId === assignee._id.toString()) {
+        receiver = assigner;
+    }
+
+    if (receiver && receiver.email) {
+        await commentNotificationEmail({
+            recipientName: receiver.fullname,
+            recipientEmail: receiver.email,
+            commenterName: request.user.fullname,
+            taskTitle: foundTask.taskTitle,
+            commentText: comment,
+        });
+    }
 
     return response.status(201)
     .json(
