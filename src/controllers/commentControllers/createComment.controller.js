@@ -14,7 +14,7 @@ const createComment = asyncHandler(async (request, response) => {
         throw new apiError(404, "Comment is required")
     }
 
-    const foundTask = await Task.findById(taskId).populate("taskAssignedTo", "_id fullname");
+    const foundTask = await Task.findById(taskId).populate("taskAssignedTo", "_id fullname email");
 
     if(!foundTask){
         return response.status(404)
@@ -50,11 +50,16 @@ const createComment = asyncHandler(async (request, response) => {
     const assignee = foundTask.taskAssignedTo;
 
     let receiver = null;
-
+console.log("assigner", assigner);
+console.log("assigned to", assignee);
     if (commenterId === assigner._id.toString()) {
         receiver = assignee;
+        receiver.email = foundTask.taskAssignedTo.email
+        console.log("receiver email", receiver.email)
     } else if (commenterId === assignee._id.toString()) {
         receiver = assigner;
+        receiver.email = request.user.email;
+        console.log("receiver email", receiver.email)
     }
 
     if (receiver && receiver.email) {
