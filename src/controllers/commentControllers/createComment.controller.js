@@ -64,7 +64,7 @@ console.log("assigned to", assignee);
 
     if (receiver && receiver.email) {
         await commentNotificationEmail({
-            recipientName: receiver.fullname,
+            recipientName: receiver.fullname || "User",
             recipientEmail: receiver.email,
             commenterName: request.user.fullname,
             taskTitle: foundTask.taskTitle,
