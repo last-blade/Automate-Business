@@ -24,7 +24,7 @@ const commentNotificationEmail = async ({ recipientName, recipientEmail, comment
             <p>You can reply or view more details by visiting your dashboard.</p>
 
             <div style="text-align: center; margin: 30px 0;">
-                <a href="https://yourdomain.com/dashboard" style="background-color: #1976D2; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 4px; font-size: 15px;">
+                <a href="https://jasmineautomate.vercel.app/" style="background-color: #1976D2; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 4px; font-size: 15px;">
                     🔗 Go to Dashboard
                 </a>
             </div>
