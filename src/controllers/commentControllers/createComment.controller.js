@@ -54,12 +54,12 @@ console.log("assigner", assigner);
 console.log("assigned to", assignee);
     if (commenterId === assigner._id.toString()) {
         receiver = assignee;
-        receiver.email = foundTask.taskAssignedTo.email
-        console.log("receiver email", receiver.email)
+        receiver.email = request.user.email
+        console.log("task creator", receiver.email)
     } else if (commenterId === assignee._id.toString()) {
         receiver = assigner;
-        receiver.email = request.user.email;
-        console.log("receiver email", receiver.email)
+        receiver.email = foundTask.taskAssignedTo.email;
+        console.log("assigned-to", receiver.email)
     }
 
     if (receiver && receiver.email) {
