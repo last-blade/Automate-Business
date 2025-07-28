@@ -1,0 +1,72 @@
+import { sendMail } from "../../utils/sendEmail.js";
+import dayjs from "dayjs";
+
+const taskReminderEmail = async ({ taskTitle, assigneeName, assigneeEmail, dueDate, taskDescription, taskPriority, taskCategory, taskImage }) => {
+    const subject = "⏰ Task Reminder - Jasmine Automate";
+
+    const formattedDueDate = dueDate ? dayjs(dueDate).format("D MMMM YYYY") : "Not specified";
+
+    const htmlBody = `
+        <div style="max-width: 600px; margin: auto; border: 1px solid #e0e0e0; border-radius: 8px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9f9f9; color: #333;">
+            <div style="background-color: #0047AB; color: #fff; padding: 20px 30px; border-radius: 8px 8px 0 0;">
+                <h2 style="margin: 0; font-weight: 600;">Jasmine Automate</h2>
+                <p style="margin: 5px 0 0;">Task Reminder Notification</p>
+            </div>
+
+            <div style="padding: 30px;">
+                <p style="font-size: 16px;">Hi <strong>${assigneeName}</strong>,</p>
+                <p style="font-size: 15px;">This is a friendly reminder about your pending task. Below are the task details:</p>
+
+                <table style="width: 100%; margin-top: 25px; border-collapse: collapse; font-size: 14px;">
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #f1f5fb;"><strong>Task</strong></td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">${taskTitle}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #f1f5fb;"><strong>Due Date</strong></td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">${formattedDueDate}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #f1f5fb;"><strong>Description</strong></td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">${taskDescription || "N/A"}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #f1f5fb;"><strong>Priority</strong></td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">${taskPriority || "Normal"}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #ddd; background-color: #f1f5fb;"><strong>Category</strong></td>
+                        <td style="padding: 12px; border: 1px solid #ddd;">${taskCategory || "Uncategorized"}</td>
+                    </tr>
+                </table>
+
+                ${taskImage ? `
+                <div style="margin-top: 30px;">
+                    <p><strong>Attached Image:</strong></p>
+                    <img src="${taskImage}" alt="Task Image" style="max-width: 100%; border: 1px solid #ccc; border-radius: 6px;" />
+                </div>` : ""
+                }
+
+                <p style="margin-top: 30px; font-size: 14px;">Please ensure this task is completed as per the schedule.</p>
+
+                <div style="margin-top: 25px; text-align: center;">
+                    <a href="https://jasmineautomate.vercel.app/" 
+                    style="background-color: #0047AB; color: #fff; text-decoration: none; padding: 12px 20px; border-radius: 6px; display: inline-block; font-weight: bold;">
+                    Go to Dashboard
+                    </a>
+                </div>
+
+                <p style="margin-top: 40px; font-size: 14px;">Warm regards,</p>
+                <p style="font-weight: 600; font-size: 15px;">Jasmine Automate<br/>Productivity & Workflow Team</p>
+            </div>
+
+            <div style="background-color: #f1f1f1; color: #777; text-align: center; padding: 15px; border-top: 1px solid #ddd; border-radius: 0 0 8px 8px; font-size: 12px;">
+                <p style="margin: 0;">© ${new Date().getFullYear()} Jasmine Automate. All rights reserved.</p>
+            </div>
+        </div>
+    `;
+
+    await sendMail(assigneeEmail, subject, htmlBody);
+};
+
+export default taskReminderEmail;
