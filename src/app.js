@@ -2,6 +2,7 @@ import express, { urlencoded } from "express"
 import dotenv from "dotenv"
 import cookieParser from "cookie-parser";
 import cors from "cors"
+import "./cron/taskReminderCron.js";
 
 dotenv.config({
     path: "./.env"
