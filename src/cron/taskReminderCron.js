@@ -40,7 +40,7 @@ const sendDailyAndWeeklyTaskEmails = async () => {
 };
 
 // Schedule job at 10:00 AM IST daily
-cron.schedule("0 13 * * *", () => {
+cron.schedule("0 10 * * *", () => {
     sendDailyAndWeeklyTaskEmails();
 }, {
     timezone: "Asia/Kolkata"
