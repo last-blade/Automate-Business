@@ -21,6 +21,12 @@ const fetchTasksAssignedToMe = asyncHandler(async (request, response) => {
         },
 
         {
+            $sort: {
+                createdAt: -1
+            }
+        },
+
+        {
             $skip: skip
         },
 
