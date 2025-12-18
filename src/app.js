@@ -27,7 +27,7 @@ import userRoute from "./routes/user.routes.js";
 import taskRoute from "./routes/task.routes.js";
 import commentRoute from "./routes/comment.routes.js";
 import ticketRoute from "./routes/ticket.routes.js";
-
+import webhookRoutes from "./routes/webhook.js";
 
 //User Route
 app.use("/api/v1/user", userRoute);
@@ -40,5 +40,8 @@ app.use("/api/v1/comment", commentRoute);
 
 //Ticket Route
 app.use("/api/v1/support", ticketRoute);
+
+//Webhook
+app.use("/webhook", webhookRoutes);
 
 export { app }
