@@ -1,5 +1,6 @@
-import { apiError, apiResponse, asyncHandler } from "../allImports.js";
+import { apiError, apiResponse, asyncHandler, User } from "../allImports.js";
 import { sendOtpToEmail } from "../../utils/sendOtpToEmail.js";
+import { sendWhatsAppTemplate } from "../../utils/sendWhatsApp.js";
 
 const sendOTP = asyncHandler(async (request, response) => {
     const { email } = request.body;
@@ -8,7 +9,22 @@ const sendOTP = asyncHandler(async (request, response) => {
         throw new apiError(404, "Email is required for OTP")
     }
 
-    await sendOtpToEmail(email, "Your OTP for verification on Jasmine Automate");
+    const otp = await sendOtpToEmail(email, "Your OTP for verification on Jasmine Automate");
+
+    const foundUser = await User.findOne({email});
+
+    if(!foundUser){
+        throw new apiError(404, "User not found with this email")
+    }
+
+    const phone = foundUser.whatsappNumber;
+
+    await sendWhatsAppTemplate({
+        to: phone,
+        templateName: "otp_auth_code",
+        languageCode: "en_US",
+        otp,
+    });
 
     const options = {
         httpOnly: true,
