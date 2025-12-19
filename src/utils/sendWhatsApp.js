@@ -24,7 +24,7 @@ export const sendWhatsAppTemplate = async ({
   const normalizedTo = normalizeTo(to);
   if (!normalizedTo) throw new Error("Invalid phone number");
   if (!messages) throw new Error("Message missing");
-console.log("message", messages)
+// console.log("message", messages)
   const payload = {
     messaging_product: "whatsapp",
     to: normalizedTo,
