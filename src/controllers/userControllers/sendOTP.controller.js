@@ -21,9 +21,10 @@ const sendOTP = asyncHandler(async (request, response) => {
 
     await sendWhatsAppTemplate({
         to: phone,
+        messages: [otp],
         templateName: "otp_auth_code",
         languageCode: "en_US",
-        otp,
+        
     });
 
     const options = {
