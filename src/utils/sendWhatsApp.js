@@ -11,7 +11,7 @@ const normalizeTo = (input) => {
 
 export const sendWhatsAppTemplate = async ({
   to,
-  otp,
+  messages,
   templateName,
   languageCode,
 }) => {
@@ -23,8 +23,8 @@ export const sendWhatsAppTemplate = async ({
 
   const normalizedTo = normalizeTo(to);
   if (!normalizedTo) throw new Error("Invalid phone number");
-  if (!otp) throw new Error("OTP missing");
-
+  if (!messages) throw new Error("Message missing");
+console.log("message", messages)
   const payload = {
     messaging_product: "whatsapp",
     to: normalizedTo,
@@ -35,13 +35,19 @@ export const sendWhatsAppTemplate = async ({
       components: [
         {
           type: "body",
-          parameters: [{ type: "text", text: `${otp}` }],
+          parameters: messages.map((msg) => ({
+            type: "text",
+            text: String(msg)
+          })),
         },
         {
           type: "button",
           sub_type: "url",
           index: "0",
-          parameters: [{ type: "text", text: `${otp}` }],
+          parameters: messages.map((msg) => ({
+            type: "text",
+            text: String(msg)
+          })),
         },
       ],
     },
