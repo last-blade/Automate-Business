@@ -1,4 +1,5 @@
 import { sendMail } from "../../utils/sendEmail.js";
+import { sendWhatsAppTemplate } from "../../utils/sendWhatsApp.js";
 
 const taskDeletedEmail = async ({ taskTitle, assigneeName, assigneeEmail }) => {
     const subject = `❌ Task Deleted - ${taskTitle}`;
@@ -34,6 +35,17 @@ const taskDeletedEmail = async ({ taskTitle, assigneeName, assigneeEmail }) => {
     `;
 
     await sendMail(assigneeEmail, subject, htmlBody);
+    await sendWhatsAppTemplate({
+      to: 919643491014,
+        messages: [
+        assigneeName,
+        taskTitle,
+      ],
+      templateName: "task_deleted",
+      languageCode: "en",
+    
+      // ❌ NO buttonParams at all
+    });
 };
 
 export default taskDeletedEmail;
