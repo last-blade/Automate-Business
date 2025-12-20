@@ -78,7 +78,7 @@ const createTask = asyncHandler(async (request, response) => {
 
     const taskAssignedToUser = createdTask.taskAssignedTo;
 console.log("phone", createdTask.taskAssignedTo?.whatsappNumber)
-    await taskCreatedEmail({taskTitle, assigneeName: taskAssignedToUser.fullname, assigneeEmail: taskAssignedToUser.email, dueDate: taskDueDate, taskDescription, taskPriority, taskCategory, taskImage: createdTask.taskImage?.url, phone: taskAssignedToUser?.whatsappNumber})
+    await taskCreatedEmail({taskTitle, assigneeName: taskAssignedToUser.fullname, assigneeEmail: taskAssignedToUser.email, dueDate: taskDueDate, taskDescription, taskPriority, taskCategory, taskImage: createdTask.taskImage?.url, phone: createdTask.taskAssignedTo?.whatsappNumber})
 
     await Activity.create({
         messageType: "task_created",

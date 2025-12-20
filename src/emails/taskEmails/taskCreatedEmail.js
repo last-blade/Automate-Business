@@ -74,22 +74,20 @@ const taskCreatedEmail = async ({ taskTitle, assigneeName, assigneeEmail, dueDat
 
     await sendMail(assigneeEmail, subject, htmlBody);
 
-    await sendWhatsAppTemplate({
-  to: phone,
-    messages: [
-    assigneeName,
-    taskTitle,
-    formattedDueDate || "N/A",
-    taskDescription || "-",
-    taskPriority || "-",
-    taskCategory || "-"
-  ],
-  templateName: "assigned_task_no_image",
-  languageCode: "en",
+  await sendWhatsAppTemplate({
+        to: phone,
+        messages: [
+        assigneeName || "User",
+        taskTitle || "N/A",
+        formattedDueDate || "N/A",
+        taskDescription || "N/A",
+        taskPriority || "N/A",
+        taskCategory || "N/A",
+        ],
+        templateName: "assigned_task_no_image",
+        languageCode: "en",
 
-  // ❌ NO buttonParams at all
-});
-
+    });
 };
 
 export default taskCreatedEmail;
