@@ -39,4 +39,4 @@ const sendOTP = asyncHandler(async (request, response) => {
         .json(new apiResponse(200, {}, "OTP sent successfully."));
 });
 
-export {sendOTP}
+export {sendOTP} 
