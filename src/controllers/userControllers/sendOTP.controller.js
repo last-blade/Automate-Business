@@ -24,7 +24,7 @@ const sendOTP = asyncHandler(async (request, response) => {
         messages: [otp],
         templateName: "otp_auth_code",
         languageCode: "en_US",
-        
+        urlButton: { index: 0, param: otp },
     });
 
     const options = {
