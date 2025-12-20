@@ -17,11 +17,12 @@ const textParam = (val) => ({
 
 export const sendWhatsAppTemplate = async ({
   to,
+  messages,
   templateName,
   languageCode = "en",
 
   // ✅ body placeholders ({{1}}, {{2}}, ...)
-  bodyParams = [],
+  // bodyParams = [],
 
   // ✅ OPTIONAL: only if template has a dynamic URL button like https://.../{{1}}
   // For URL buttons this is typically a SINGLE value (the URL suffix)
@@ -38,10 +39,10 @@ export const sendWhatsAppTemplate = async ({
   const components = [];
 
   // Add BODY only if template body actually has placeholders
-  if (Array.isArray(bodyParams) && bodyParams.length > 0) {
+  if (Array.isArray(messages) && messages.length > 0) {
     components.push({
       type: "body",
-      parameters: bodyParams.map(textParam),
+      parameters: messages.map(textParam),
     });
   }
 
