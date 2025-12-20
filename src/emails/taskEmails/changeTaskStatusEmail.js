@@ -56,7 +56,6 @@ const changeTaskStatusEmail = async ({ taskTitle, assigneeName, assigneeEmail, n
         ],
         templateName: "task_of_status_updated",
         languageCode: "en",
-        urlButton: { index: 0, param: taskId },
     });
 };
 
