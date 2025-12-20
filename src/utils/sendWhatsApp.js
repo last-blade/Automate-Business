@@ -72,7 +72,8 @@ export const sendWhatsAppTemplate = async ({
       language: { code: languageCode },
       ...(components.length ? { components } : {}),
     },
-  };
+  };console.log("WA FINAL PAYLOAD >>>", JSON.stringify(payload, null, 2));
+
 
   const response = await fetch(
     `https://graph.facebook.com/${process.env.WHATSAPP_API_VERSION}/${process.env.WHATSAPP_PHONE_ID}/messages`,
