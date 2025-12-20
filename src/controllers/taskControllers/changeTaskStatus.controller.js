@@ -23,7 +23,7 @@ const changeTaskStatus = asyncHandler(async (request, response) => {
         $set: {
             taskStatus: status.status
         }
-    }, {new: true}).select("-__v -_id").populate("taskCreatedBy", "fullname email").populate("taskAssignedTo", "fullname");
+    }, {new: true}).select("-__v -_id").populate("taskCreatedBy", "fullname email whatsappNumber").populate("taskAssignedTo", "fullname");
 
     if(!updatedTask){
         throw new apiError(500, "Something went wrong while changing the status of the task")
@@ -35,7 +35,8 @@ const changeTaskStatus = asyncHandler(async (request, response) => {
         taskTitle,
         assigneeName: taskCreatedBy.fullname,
         assigneeEmail: taskCreatedBy.email,
-        newStatus: taskStatus
+        newStatus: taskStatus,
+        phone: updatedTask?.taskCreatedBy?.whatsappNumber
     });
 
     await Activity.create({

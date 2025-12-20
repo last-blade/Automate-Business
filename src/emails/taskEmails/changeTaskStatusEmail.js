@@ -1,6 +1,7 @@
 import { sendMail } from "../../utils/sendEmail.js";
+import { sendWhatsAppTemplate } from "../../utils/sendWhatsApp.js";
 
-const changeTaskStatusEmail = async ({ taskTitle, assigneeName, assigneeEmail, newStatus }) => {
+const changeTaskStatusEmail = async ({ taskTitle, assigneeName, assigneeEmail, newStatus, phone }) => {
     const subject = `✅ Task Status Updated - ${taskTitle}`;
 
     const htmlBody = `
@@ -45,6 +46,18 @@ const changeTaskStatusEmail = async ({ taskTitle, assigneeName, assigneeEmail, n
     `;
 
     await sendMail(assigneeEmail, subject, htmlBody);
+
+    await sendWhatsAppTemplate({
+        to: phone,
+        messages: [
+        assigneeName || "User",
+        taskTitle || "N/A",
+        newStatus,
+        ],
+        templateName: "task_of_status_updated",
+        languageCode: "en",
+        urlButton: { index: 0, param: taskId },
+    });
 };
 
 export default changeTaskStatusEmail;
