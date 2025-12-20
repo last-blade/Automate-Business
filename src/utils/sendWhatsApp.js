@@ -19,7 +19,7 @@ export const sendWhatsAppTemplate = async ({
   to,
   messages,
   templateName,
-  languageCode = "en",
+  languageCode,
 
   // ✅ body placeholders ({{1}}, {{2}}, ...)
   // bodyParams = [],
