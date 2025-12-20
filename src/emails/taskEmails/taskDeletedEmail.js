@@ -1,7 +1,7 @@
 import { sendMail } from "../../utils/sendEmail.js";
 import { sendWhatsAppTemplate } from "../../utils/sendWhatsApp.js";
 
-const taskDeletedEmail = async ({ taskTitle, assigneeName, assigneeEmail }) => {
+const taskDeletedEmail = async ({ taskTitle, assigneeName, assigneeEmail, phone }) => {
     const subject = `❌ Task Deleted - ${taskTitle}`;
 
     const htmlBody = `
@@ -36,7 +36,7 @@ const taskDeletedEmail = async ({ taskTitle, assigneeName, assigneeEmail }) => {
 
     await sendMail(assigneeEmail, subject, htmlBody);
     await sendWhatsAppTemplate({
-      to: 919643491014,
+      to: phone,
         messages: [
         assigneeName,
         taskTitle,

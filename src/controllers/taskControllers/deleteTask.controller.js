@@ -9,7 +9,7 @@ const deleteTask = asyncHandler(async (request, response) => {
         throw new apiError(404, "Task id not found!")
     }
 
-    const foundTask = await Task.findById(taskId).populate("taskAssignedTo", "fullname email").populate("taskCreatedBy", "fullname");
+    const foundTask = await Task.findById(taskId).populate("taskAssignedTo", "fullname email whatsappNumber").populate("taskCreatedBy", "fullname");
 
     if(!foundTask){
         return response.status(404)
@@ -32,7 +32,8 @@ const deleteTask = asyncHandler(async (request, response) => {
     await taskDeletedEmail({
         taskTitle: foundTask.taskTitle,
         assigneeName: foundTask.taskAssignedTo.fullname,
-        assigneeEmail: foundTask.taskAssignedTo.email
+        assigneeEmail: foundTask.taskAssignedTo.email,
+        phone: foundTask.taskAssignedTo.whatsappNumber,
     });
 
     await Activity.create({
