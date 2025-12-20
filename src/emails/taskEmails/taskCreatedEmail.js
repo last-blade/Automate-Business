@@ -86,7 +86,6 @@ const taskCreatedEmail = async ({ taskTitle, assigneeName, assigneeEmail, dueDat
         ],
         templateName: "assigned_task_no_image",
         languageCode: "en",
-        urlButton: { index: 0, param: taskId },
     });
 };
 
