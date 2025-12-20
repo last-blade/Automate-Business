@@ -43,6 +43,7 @@ const taskDeletedEmail = async ({ taskTitle, assigneeName, assigneeEmail }) => {
       ],
       templateName: "task_deleted",
       languageCode: "en",
+    //   buttonParams: [taskId],
     
       // ❌ NO buttonParams at all
     });
