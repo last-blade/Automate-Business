@@ -14,7 +14,7 @@ const createComment = asyncHandler(async (request, response) => {
         throw new apiError(404, "Comment is required")
     }
 
-    const foundTask = await Task.findById(taskId).populate("taskAssignedTo", "_id fullname email").populate("taskCreatedBy", "fullname email");
+    const foundTask = await Task.findById(taskId).populate("taskAssignedTo", "_id fullname email").populate("taskCreatedBy", "fullname email whatsappNumber");
 
     if(!foundTask){
         return response.status(404)
@@ -71,6 +71,7 @@ console.log("assigned to", assignee);
             commenterName: request.user.fullname,
             taskTitle: foundTask.taskTitle,
             commentText: comment,
+            phone: foundTask.taskCreatedBy?.whatsappNumber,
         });
     }
 

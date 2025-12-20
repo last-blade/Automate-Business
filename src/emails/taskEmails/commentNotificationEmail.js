@@ -1,6 +1,7 @@
 import { sendMail } from "../../utils/sendEmail.js";
+import { sendWhatsAppTemplate } from "../../utils/sendWhatsApp.js";
 
-const commentNotificationEmail = async ({ recipientName, recipientEmail, commenterName, taskTitle, commentText }) => {
+const commentNotificationEmail = async ({ recipientName, recipientEmail, commenterName, taskTitle, commentText, phone }) => {
     const subject = `💬 New Comment on Task: "${taskTitle}"`;
 
     const htmlBody = `
@@ -40,6 +41,18 @@ const commentNotificationEmail = async ({ recipientName, recipientEmail, comment
     `;
 
     await sendMail(recipientEmail, subject, htmlBody);
+
+    await sendWhatsAppTemplate({
+        to: phone,
+        messages: [
+        recipientName || "User",
+        commenterName,
+        taskTitle || "N/A",
+        commentText,
+        ],
+        templateName: "task_comment_notification",
+        languageCode: "en",
+    });
 };
 
 export default commentNotificationEmail;
