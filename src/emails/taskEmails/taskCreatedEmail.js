@@ -1,7 +1,8 @@
 import { sendMail } from "../../utils/sendEmail.js";
 import dayjs from "dayjs";
+import { sendWhatsAppTemplate } from "../../utils/sendWhatsApp.js";
 
-const taskCreatedEmail = async ({ taskTitle, assigneeName, assigneeEmail, dueDate, taskDescription, taskPriority, taskCategory, taskImage }) => {
+const taskCreatedEmail = async ({ taskTitle, assigneeName, assigneeEmail, dueDate, taskDescription, taskPriority, taskCategory, taskImage, phone }) => {
     const subject = "📝 New Task Assigned - Jasmine Automate";
 
     const formattedDueDate = dueDate ? dayjs(dueDate).format("D MMMM YYYY") : null;
@@ -72,6 +73,23 @@ const taskCreatedEmail = async ({ taskTitle, assigneeName, assigneeEmail, dueDat
 
 
     await sendMail(assigneeEmail, subject, htmlBody);
+
+    await sendWhatsAppTemplate({
+  to: phone,
+    messages: [
+    assigneeName,
+    taskTitle,
+    formattedDueDate || "N/A",
+    taskDescription || "-",
+    taskPriority || "-",
+    taskCategory || "-"
+  ],
+  templateName: "assigned_task_no_image",
+  languageCode: "en",
+
+  // ❌ NO buttonParams at all
+});
+
 };
 
 export default taskCreatedEmail;

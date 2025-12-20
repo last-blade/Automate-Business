@@ -70,15 +70,15 @@ const createTask = asyncHandler(async (request, response) => {
 
     const newTask = await Task.create(taskData);
 
-    const createdTask = await Task.findById(newTask._id).populate("taskAssignedTo", "fullname email taskDueDate").populate("taskCreatedBy", "fullname email");
+    const createdTask = await Task.findById(newTask._id).populate("taskAssignedTo", "fullname email taskDueDate whatsappNumber").populate("taskCreatedBy", "fullname email");
 
     if (!createdTask) {
         throw new apiError(500, "Something went wrong while assigning task");
     }
 
     const taskAssignedToUser = createdTask.taskAssignedTo;
-
-    await taskCreatedEmail({taskTitle, assigneeName: taskAssignedToUser.fullname, assigneeEmail: taskAssignedToUser.email, dueDate: taskDueDate, taskDescription, taskPriority, taskCategory, taskImage: createdTask.taskImage?.url})
+console.log("phone", createdTask.taskAssignedTo?.whatsappNumber)
+    await taskCreatedEmail({taskTitle, assigneeName: taskAssignedToUser.fullname, assigneeEmail: taskAssignedToUser.email, dueDate: taskDueDate, taskDescription, taskPriority, taskCategory, taskImage: createdTask.taskImage?.url, phone: taskAssignedToUser?.whatsappNumber})
 
     await Activity.create({
         messageType: "task_created",
