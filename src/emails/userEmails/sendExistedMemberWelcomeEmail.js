@@ -1,6 +1,7 @@
 import { sendMail } from "../../utils/sendEmail.js";
+import { sendWhatsAppTemplate } from "../../utils/sendWhatsApp.js";
 
-const sendExistedMemberWelcomeEmail = async({fullname, email, createdBy}) => {
+const sendExistedMemberWelcomeEmail = async({fullname, email, createdBy, phone}) => {
     const subject = `👋 Welcome to Jasmine Automate!`;
     const htmlBody = `<div style="max-width: 700px; margin: auto; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; border: 1px solid #ddd; border-radius: 8px; background-color: #fff;">
         <div style="background-color: #4CAF50; color: #fff; padding: 20px 30px; border-radius: 8px 8px 0 0;">
@@ -32,6 +33,16 @@ const sendExistedMemberWelcomeEmail = async({fullname, email, createdBy}) => {
     `;
 
     await sendMail(email, subject, htmlBody)
+
+    await sendWhatsAppTemplate({
+        to: phone,
+        messages: [
+        fullname || "User",
+        createdBy || "User",
+        ],
+        templateName: "team_member_added",
+        languageCode: "en",
+    });
 };
 
 export {sendExistedMemberWelcomeEmail}

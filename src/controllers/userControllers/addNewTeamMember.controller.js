@@ -35,7 +35,7 @@ const addNewTeamMember = asyncHandler(async (request, response) => {
         if(!foundNewMember){
             throw new apiError(500, "Something went wrong, while adding a new member")
         }
-        await sendExistedMemberWelcomeEmail({ fullname, email, createdBy: foundNewMember.newMemberCreatedBy.fullname});
+        await sendExistedMemberWelcomeEmail({ fullname, email, createdBy: foundNewMember.newMemberCreatedBy.fullname, phone: foundUser?.whatsappNumber});
 
         return response.status(201)
         .json(
