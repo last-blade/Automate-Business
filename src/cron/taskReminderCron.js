@@ -1,6 +1,7 @@
 import cron from "node-cron";
 import { Task } from "../models/task.model.js";
 import taskReminderEmail from "../emails/taskEmails/taskReminderEmail.js";
+import { User } from "../models/user.model.js";
 
 const sendDailyAndWeeklyTaskEmails = async () => {
     console.log("Running daily/weekly task reminder email cron...");
@@ -21,6 +22,7 @@ const sendDailyAndWeeklyTaskEmails = async () => {
 
     for (const task of tasks) {
         const assignee = task.taskAssignedTo;
+        const assignedUser = await User.findById(assignee);
 
         if (!assignee || !assignee.email) continue;
 
@@ -32,7 +34,8 @@ const sendDailyAndWeeklyTaskEmails = async () => {
             taskDescription: task.taskDescription,
             taskPriority: task.taskPriority,
             taskCategory: task.taskCategory,
-            taskImage: task.taskImage?.url || null
+            taskImage: task.taskImage?.url || null,
+            phone: assignedUser?.whatsappNumber,
         });
 
         console.log(`Reminder email sent to ${assignee.fullname} (${assignee.email})`);
