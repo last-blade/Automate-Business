@@ -48,6 +48,7 @@ const reAssignAllTasks = asyncHandler(async (request, response) => {
         newAssigneeEmail: foundNewTeamMemberToWhichTaskAssign.email,
         oldUserEmail: confirmEmail,
         totalTasksReassigned: tasksToUpdate.length,
+        phone: foundNewTeamMemberToWhichTaskAssign?.whatsappNumber,
     });
 
     // Sending removal email to old assignee
@@ -56,12 +57,13 @@ const reAssignAllTasks = asyncHandler(async (request, response) => {
         oldUserEmail: oldTeamMemberToWhichTaskRemove.email,
         newUserName: foundNewTeamMemberToWhichTaskAssign.fullname,
         totalTasksRemoved: tasksToUpdate.length,
+        phone: oldTeamMemberToWhichTaskRemove?.whatsappNumber,
     });
 
     await Activity.create({
         messageType: "tasks_re-assigned",
         message: `${request.user.fullname} re-assigned your all tasks to: ${foundNewTeamMemberToWhichTaskAssign.fullname}`,
-        creatorName: request.user.fullname,
+        creatorName: request.user.fullname || "User",
         user: oldTeamMemberId,
         // task: {},
     });

@@ -26,7 +26,8 @@ const activitySchema = new Schema({
 
     creatorName: {
         type: String,
-        required: true, 
+        required: false,
+        default: "User", 
     }
 
 }, {timestamps: true});

@@ -1,6 +1,7 @@
 import { sendMail } from "../../utils/sendEmail.js";
+import { sendWhatsAppTemplate } from "../../utils/sendWhatsApp.js";
 
-const taskReAssignedEmail = async ({ newAssigneeName, newAssigneeEmail, oldUserEmail, totalTasksReassigned }) => {
+const taskReAssignedEmail = async ({ newAssigneeName, newAssigneeEmail, oldUserEmail, totalTasksReassigned, phone }) => {
     const subject = `📂 ${totalTasksReassigned} Task(s) Reassigned to You`;
 
     const htmlBody = `
@@ -40,6 +41,17 @@ const taskReAssignedEmail = async ({ newAssigneeName, newAssigneeEmail, oldUserE
     `;
 
     await sendMail(newAssigneeEmail, subject, htmlBody);
+
+    await sendWhatsAppTemplate({
+        to: phone,
+        messages: [
+        newAssigneeName || "User",
+        totalTasksReassigned,
+        oldUserEmail,
+        ],
+        templateName: "tasks_reassigned_to_you",
+        languageCode: "en",
+    });
 };
 
 export default taskReAssignedEmail;
