@@ -74,19 +74,38 @@ const taskCreatedEmail = async ({ taskTitle, assigneeName, assigneeEmail, dueDat
 
     await sendMail(assigneeEmail, subject, htmlBody);
 
-  await sendWhatsAppTemplate({
-        to: phone,
-        messages: [
-        assigneeName || "User",
-        taskTitle || "N/A",
-        formattedDueDate || "N/A",
-        taskDescription || "N/A",
-        taskPriority || "N/A",
-        taskCategory || "N/A",
-        ],
-        templateName: "assigned_task_no_image",
-        languageCode: "en",
-    });
+    if(!taskImage){
+        await sendWhatsAppTemplate({
+            to: phone,
+            messages: [
+            assigneeName || "User",
+            taskTitle || "N/A",
+            formattedDueDate || "N/A",
+            taskDescription || "N/A",
+            taskPriority || "N/A",
+            taskCategory || "N/A",
+            ],
+            templateName: "assigned_task_no_image",
+            languageCode: "en",
+        });
+    }
+    else{
+        console.log("running image template")
+        await sendWhatsAppTemplate({
+            to: phone,
+            messages: [
+            assigneeName || "User",
+            taskTitle || "N/A",
+            formattedDueDate || "N/A",
+            taskDescription || "N/A",
+            taskPriority || "N/A",
+            taskCategory || "N/A",
+            ],
+            templateName: "task_assigned_with_image_utility",
+            languageCode: "en",
+            headerImage: taskImage
+        });
+    }
 };
 
 export default taskCreatedEmail;

@@ -44,7 +44,7 @@ const createTask = asyncHandler(async (request, response) => {
         const taskImageUploaded = await uploadOnCloudinary(taskImageLocalFilePath);
         if (taskImageUploaded) {
             taskImage = {
-                url: taskImageUploaded.url,
+                url: taskImageUploaded.secure_url,
                 public_id: taskImageUploaded.public_id
             };
         }
