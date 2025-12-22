@@ -27,7 +27,6 @@ export const sendWhatsAppTemplate = async ({
   // ✅ OPTIONAL: only if template has a dynamic URL button like https://.../{{1}}
   // For URL buttons this is typically a SINGLE value (the URL suffix)
   urlButton = null, // { index: 0, param: "69464e1bd703eabbf7f63795" }
-  headerImage = null,
 }) => {
   if (!process.env.WHATSAPP_TOKEN) throw new Error("WHATSAPP_TOKEN missing");
   if (!process.env.WHATSAPP_PHONE_ID) throw new Error("WHATSAPP_PHONE_ID missing");
@@ -38,19 +37,6 @@ export const sendWhatsAppTemplate = async ({
   if (!templateName) throw new Error("templateName missing");
 
   const components = [];
-    // Add HEADER image only if provided (template must have Image header)
-  if (headerImage) {
-    components.push({
-      type: "header",
-      parameters: [
-        {
-          type: "image",
-          image: { link: String(headerImage) },
-        },
-      ],
-    });
-  }
-
 
   // Add BODY only if template body actually has placeholders
   if (Array.isArray(messages) && messages.length > 0) {
@@ -102,7 +88,6 @@ export const sendWhatsAppTemplate = async ({
   );
 
   const data = await response.json();
-console.log("WA RESPONSE >>>", JSON.stringify(data, null, 2));
 
   if (!response.ok) {
     console.error("WhatsApp API Error:", data);
