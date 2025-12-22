@@ -1,6 +1,7 @@
 import { sendMail } from "../../utils/sendEmail.js";
+import { sendWhatsAppTemplate } from "../../utils/sendWhatsApp.js";
 
-const taskRemovedFromUserEmail = async ({ oldUserName, oldUserEmail, newUserName, totalTasksRemoved }) => {
+const taskRemovedFromUserEmail = async ({ oldUserName, oldUserEmail, newUserName, totalTasksRemoved, phone }) => {
     const subject = `🚫 ${totalTasksRemoved} Task(s) Removed From Your Account`;
 
     const htmlBody = `
@@ -34,6 +35,17 @@ const taskRemovedFromUserEmail = async ({ oldUserName, oldUserEmail, newUserName
     `;
 
     await sendMail(oldUserEmail, subject, htmlBody);
+
+    await sendWhatsAppTemplate({
+        to: phone,
+        messages: [
+        oldUserName || "User",
+        totalTasksRemoved,
+        newUserName || "User",
+        ],
+        templateName: "tasks_removed_from_user",
+        languageCode: "en",
+    });
 };
 
 export default taskRemovedFromUserEmail;
