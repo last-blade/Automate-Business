@@ -1,6 +1,7 @@
 import { sendMail } from "../../utils/sendEmail.js";
+import { sendWhatsAppTemplate } from "../../utils/sendWhatsApp.js";
 
-const overdueTasksNotificationEmail = async ({ fullname, email, totalOverdueTasks }) => {
+const overdueTasksNotificationEmail = async ({ fullname, email, totalOverdueTasks, phone }) => {
     const subject = `⏰ ${totalOverdueTasks} Task(s) Marked as Overdue`;
 
     const htmlBody = `
@@ -34,6 +35,16 @@ const overdueTasksNotificationEmail = async ({ fullname, email, totalOverdueTask
     `;
 
     await sendMail(email, subject, htmlBody);
+
+    await sendWhatsAppTemplate({
+        to: phone,
+        messages: [
+        fullname || "User",
+        totalOverdueTasks,
+        ],
+        templateName: "overdue_tasks_notification",
+        languageCode: "en",
+    });
 };
 
 export default overdueTasksNotificationEmail;

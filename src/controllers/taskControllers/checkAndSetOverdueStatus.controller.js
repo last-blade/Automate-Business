@@ -26,6 +26,7 @@ const sendOverdueEmailsToUsers = async (userIdsSet) => {
                 fullname: user.fullname || "User",
                 email: user.email,
                 totalOverdueTasks: overdueCount,
+                phone: user?.whatsappNumber,
             });
         }
     }
