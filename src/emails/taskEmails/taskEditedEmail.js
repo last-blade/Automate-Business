@@ -1,5 +1,6 @@
 import { sendMail } from "../../utils/sendEmail.js";
 import dayjs from "dayjs";
+import { sendWhatsAppTemplate } from "../../utils/sendWhatsApp.js";
 
 const taskEditedEmail = async ({
     assigneeName,
@@ -7,6 +8,7 @@ const taskEditedEmail = async ({
     editorName,
     oldTask,
     newTask,
+    phone,
 }) => {
     const subject = `✏️ Task Updated - ${oldTask.taskTitle}`;
 
@@ -98,6 +100,28 @@ const taskEditedEmail = async ({
     `;
 
     await sendMail(assigneeEmail, subject, htmlBody);
+
+    await sendWhatsAppTemplate({
+        to: phone,
+        messages: [
+            assigneeName || "User",
+            editorName,
+            newTask.taskTitle,
+            oldTask.taskDescription,
+            newTask.taskDescription,
+            oldTask.taskCategory,
+            newTask.taskCategory,
+            oldTask.taskDueDate,
+            newTask.taskDueDate,
+            oldTask.taskPriority,
+            newTask.taskPriority,
+            oldTask.taskAssignedTo.fullname,
+            newTask.taskAssignedTo.fullname,
+            newTask.taskFrequency?.type || "-"
+        ],
+        templateName: "task_edited_notification",
+        languageCode: "en",
+    });
 };
 
 export default taskEditedEmail;

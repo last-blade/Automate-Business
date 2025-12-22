@@ -81,7 +81,7 @@ const editTask = asyncHandler(async (request, response) => {
         $set: {
             ...taskData
         }
-    }, {new: true}).populate("taskAssignedTo", "fullname email");
+    }, {new: true}).populate("taskAssignedTo", "fullname email whatsappNumber");
 
     const oldTask = { ...foundTask.toObject() };
 
@@ -90,7 +90,8 @@ const editTask = asyncHandler(async (request, response) => {
         assigneeEmail: updatedTask.taskAssignedTo.email,
         editorName: request.user?.fullname || "A team member",
         oldTask,
-        newTask: updatedTask
+        newTask: updatedTask,
+        phone: updatedTask.taskAssignedTo?.whatsappNumber,
     });
 
     await Activity.create({
