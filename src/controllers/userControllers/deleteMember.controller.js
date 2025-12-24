@@ -11,7 +11,7 @@ const deleteMember = asyncHandler(async (request, response) => {
     const foundMember = await NewMember.findOne({
         newMemberCreatedBy: request.user?.id,
         newMember: memberId,
-    }).populate("newMember", "fullname email");
+    }).populate("newMember", "fullname email whatsappNumber");
 
     if(!foundMember){
         throw new apiError(404, "Member not found, maybe deleted")
@@ -33,6 +33,7 @@ const deleteMember = asyncHandler(async (request, response) => {
         fullname: foundMember.newMember.fullname,
         email: foundMember.newMember.email,
         removedBy: request.user.fullname,
+        phone: foundMember.newMember?.whatsappNumber,
     });
 
     return response.status(200)

@@ -1,6 +1,7 @@
 import { sendMail } from "../../utils/sendEmail.js";
+import { sendWhatsAppTemplate } from "../../utils/sendWhatsApp.js";
 
-const teamMemberRemoveEmail = async ({ fullname, email, removedBy }) => {
+const teamMemberRemoveEmail = async ({ fullname, email, removedBy, phone }) => {
     const subject = `👋You've Been Removed from a Team - Jasmine Automate`;
 
     const htmlBody = `
@@ -38,6 +39,16 @@ const teamMemberRemoveEmail = async ({ fullname, email, removedBy }) => {
     `;
 
     await sendMail(email, subject, htmlBody);
+
+    await sendWhatsAppTemplate({
+        to: phone,
+        messages: [
+        fullname || "User",
+        removedBy || "User",
+        ],
+        templateName: "team_member_removed",
+        languageCode: "en",
+    });
 };
 
 export default teamMemberRemoveEmail;
