@@ -15,6 +15,7 @@ const taskSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true,
+        index: true,
     },
 
     taskCategory: {
@@ -26,6 +27,7 @@ const taskSchema = new Schema({
         type: Date,
         // required: true,
         default: Date.now,
+        index: true,
     },
 
     taskPriority: {
@@ -84,6 +86,11 @@ const taskSchema = new Schema({
             type: String,
             required: false
         }
+    },
+
+    assigningToYourself: {
+        type: Boolean,
+        default: false,
     },
 
     taskCreatedBy: {

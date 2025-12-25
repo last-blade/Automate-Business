@@ -4,7 +4,7 @@ import taskCreatedEmail from "../../emails/taskEmails/taskCreatedEmail.js";
 import { uploadOnCloudinary } from "../../utils/cloudinary.js";
 
 const createTask = asyncHandler(async (request, response) => {
-    const {
+    let {
         taskTitle,
         taskDescription,
         taskAssignedTo,
@@ -12,17 +12,14 @@ const createTask = asyncHandler(async (request, response) => {
         taskDueDate,
         taskPriority,
         taskFrequency,
+        assigningToYourself,
     } = request.body;
 
     if (
-        [taskTitle, taskDescription, taskAssignedTo, taskCategory, taskDueDate, taskPriority]
+        [taskTitle, taskDescription, taskCategory, taskDueDate, taskPriority]
             .some(field => field === undefined || field.toString().trim() === "")
     ) {
         throw new apiError(400, "All required fields must be non-empty strings");
-    }
-
-    if (!mongoose.Types.ObjectId.isValid(taskAssignedTo)) {
-        throw new apiError(400, "taskAssignedTo must be a valid MongoDB ObjectId");
     }
 
     // if (taskFrequency !== undefined && taskFrequency !== null) {
@@ -30,10 +27,17 @@ const createTask = asyncHandler(async (request, response) => {
     //         throw new apiError(400, "If provided, taskFrequency must be an object with a 'type' field");
     //     }
     // }
-    
-    const assignedUser = await User.findById(taskAssignedTo);
-    if (!assignedUser) {
-        throw new apiError(404, "Assigned user not found");
+
+    if(assigningToYourself === true){
+        taskAssignedTo = request.user.id;
+    }else{
+        if (!mongoose.Types.ObjectId.isValid(taskAssignedTo)) {
+            throw new apiError(400, "taskAssignedTo must be a valid MongoDB ObjectId");
+        }
+        const assignedUser = await User.findById(taskAssignedTo);
+        if (!assignedUser) {
+            throw new apiError(404, "Assigned user not found");
+        }
     }
 
     // Upload image if provided
@@ -61,6 +65,7 @@ const createTask = asyncHandler(async (request, response) => {
         taskPriority,
         taskImage,
         taskCreatedBy: request.user?.id,
+        assigningToYourself,
     };
 
     // Include optional field matlab ki "taskFrequency" field if present

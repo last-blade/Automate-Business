@@ -1,16 +1,16 @@
 import mongoose from "mongoose";
 import { apiResponse, asyncHandler, Task } from "../allImports.js";
 
-const fetchDelegatedTasks = asyncHandler(async (request, response) => {
+const taskAssignedToMeByMyself = asyncHandler(async (request, response) => {
 
     const userId = request.user?.id;
-
+    
     const limit = parseInt(request.query.limit) || 10;
     const page = parseInt(request.query.page) || 1;
     const skip = (page - 1) * limit;
 
     const filter = {
-        taskCreatedBy: new mongoose.Types.ObjectId(userId),
+        taskAssignedTo: new mongoose.Types.ObjectId(userId)
     };
 
     const totalTasks = await Task.countDocuments(filter);
@@ -42,7 +42,7 @@ const fetchDelegatedTasks = asyncHandler(async (request, response) => {
     if(allTasks.length === 0){
         return response.status(200)
         .json(
-            new apiResponse(200, {}, "No task found, assign one.")
+            new apiResponse(200, {}, "No task found, assign one to yourself.")
         )
     }
 
@@ -52,4 +52,4 @@ const fetchDelegatedTasks = asyncHandler(async (request, response) => {
     )
 });
 
-export {fetchDelegatedTasks}
+export {taskAssignedToMeByMyself}
