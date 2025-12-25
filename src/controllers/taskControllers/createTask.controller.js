@@ -22,7 +22,6 @@ const createTask = asyncHandler(async (request, response) => {
     assigningToYourself,
   } = request.body;
 
-  // ✅ normalize assigningToYourself for JSON + multipart/form-data
   const isSelf =
     assigningToYourself === true ||
     assigningToYourself === "true" ||
@@ -37,7 +36,6 @@ const createTask = asyncHandler(async (request, response) => {
     throw new apiError(400, "All required fields must be non-empty strings");
   }
 
-  // ✅ Decide assignee
   if (isSelf) {
     // Ignore whatever client sent ("" etc.)
     taskAssignedTo = request.user.id;
@@ -74,7 +72,7 @@ const createTask = asyncHandler(async (request, response) => {
     taskPriority,
     taskImage,
     taskCreatedBy: request.user?.id,
-    assigningToYourself: isSelf, // ✅ store as boolean
+    assigningToYourself: isSelf,
   };
 
   // Include optional field "taskFrequency" if present
