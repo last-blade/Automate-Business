@@ -52,7 +52,7 @@ router.route("/edit-profile").put(authMiddleware, editProfile);
 
 //PATCH
 router.route("/change-whatsapp-number").patch(authMiddleware, changeWhatsappNumber);
-router.route("edit-meetingnote/:meetingNoteId").patch(authMiddleware, editMeetingNote);
+router.route("/edit-meetingnote/:meetingNoteId").patch(authMiddleware, editMeetingNote);
 
 //OTP
 router.route("/send-otp").post(sendOTP);
