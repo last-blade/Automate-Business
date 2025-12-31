@@ -44,7 +44,7 @@ const fetchMeetingNotes = asyncHandler(async (request, response) => {
 
     return response.status(200)
     .json(
-        new apiResponse(200, {page, totalPages: Math.ceil(totalNotes/limit), totalNotes}, "Meetings notes fetched successfully")
+        new apiResponse(200, {page, totalPages: Math.ceil(totalNotes/limit), meetingNotes}, "Meetings notes fetched successfully")
     )
 
 });
