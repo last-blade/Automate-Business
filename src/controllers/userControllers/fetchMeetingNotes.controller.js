@@ -14,7 +14,7 @@ const fetchMeetingNotes = asyncHandler(async (request, response) => {
     const meetingNotes = await MeetingNote.aggregate([
         {
             $match: {
-                meetingNoteCreatedBy: new mongoose.Types.ObjectId,
+                meetingNoteCreatedBy: new mongoose.Types.ObjectId(request.user.id),
             }
         },
 
@@ -40,11 +40,11 @@ const fetchMeetingNotes = asyncHandler(async (request, response) => {
         )
     }
 
-    const totalNotes = meetingNotes.length();
+    const totalNotes = meetingNotes.length;
 
     return response.status(200)
     .json(
-        new apiResponse(200, {page, totalPages: Math.ceil(totalNotes/limit), meetingNotes}, "Meetings notes fetched successfully")
+        new apiResponse(200, {page, totalPages: Math.ceil(totalNotes/limit), meetingNotes, totalNotes}, "Meetings notes fetched successfully")
     )
 
 });
