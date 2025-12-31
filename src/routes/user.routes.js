@@ -17,6 +17,10 @@ import { changeWhatsappNumber } from "../controllers/userControllers/changeWhats
 import { deleteMyAccount } from "../controllers/userControllers/deleteMyAccount.controller.js";
 import { editProfile } from "../controllers/userControllers/editProfile.controller.js";
 import { getUserActivities } from "../controllers/userControllers/getUserActivities.controller.js";
+import { createMeetingNote } from "../controllers/userControllers/createMeetingNote.controller.js";
+import { editMeetingNote } from "../controllers/userControllers/editMeetingNote.controller.js";
+import { deleteMeetingNote } from "../controllers/userControllers/deleteMeetingNote.controller.js";
+import { fetchMeetingNotes } from "../controllers/userControllers/fetchMeetingNotes.controller.js";
 
 const router = Router();
 
@@ -27,6 +31,7 @@ router.route("/change-password").post(changePassword);
 router.route("/logout").post(authMiddleware, logoutUser);
 router.route("/refresh-access-token").post(refreshAccessToken);
 router.route("/add-new-member").post(authMiddleware, addNewTeamMember);
+router.route("/create-meetingnote").post(authMiddleware, createMeetingNote);
 
 
 //GET
@@ -35,16 +40,19 @@ router.route("/fetch-all-team-members").get(authMiddleware, fetchAllTeamMembers)
 router.route("/team-member/:userId").get(authMiddleware, fetchTeamMemberDetails);
 router.route("/search-team-member").get(authMiddleware, searchTeamMember);
 router.route("/activities").get(authMiddleware, getUserActivities);
+router.route("/meetingnotes").get(authMiddleware, fetchMeetingNotes);
 
 //DELETE
 router.route("/delete-member/:memberId").delete(authMiddleware, deleteMember);
 router.route("/delete-my-account").delete(authMiddleware, deleteMyAccount);
+router.route("/delete-meetingnote/:meetingNoteId").delete(authMiddleware, deleteMeetingNote);
 
 //PUT
 router.route("/edit-profile").put(authMiddleware, editProfile);
 
 //PATCH
 router.route("/change-whatsapp-number").patch(authMiddleware, changeWhatsappNumber);
+router.route("edit-meetingnote/:meetingNoteId").patch(authMiddleware, editMeetingNote);
 
 //OTP
 router.route("/send-otp").post(sendOTP);
