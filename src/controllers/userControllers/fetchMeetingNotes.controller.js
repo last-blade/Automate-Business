@@ -7,10 +7,6 @@ const fetchMeetingNotes = asyncHandler(async (request, response) => {
     const page = parseInt(request.query.page) || 1;
     const skip = (page - 1) * 10;
 
-    // const meetingNotes = await MeetingNote.find({
-    //     meetingNoteCreatedBy: request.user?.id,
-    // }).lean();
-
     const meetingNotes = await MeetingNote.aggregate([
         {
             $match: {
