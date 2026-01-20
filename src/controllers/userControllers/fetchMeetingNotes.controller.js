@@ -15,6 +15,32 @@ const fetchMeetingNotes = asyncHandler(async (request, response) => {
         },
 
         {
+            $lookup: {
+                from: "users",
+                localField: "meetingMembers",
+                foreignField: "_id",
+                as: "meetingMembers"
+            }
+        },
+
+        {
+            $project: {
+                meetingTitle: 1,
+                meetingDate: 1,
+                department: 1,
+                meetingMode: 1,
+                meetingDescription: 1,
+                createdAt: 1,
+                meetingMembers: {
+                    fullname: 1,
+                    email: 1,
+                    accountType: 1,
+                    whatsappNumber: 1
+                }
+            }
+        },
+
+        {
             $sort: {
                 createdAt: -1
             }
