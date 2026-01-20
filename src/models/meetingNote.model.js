@@ -23,10 +23,13 @@ const meetingNoteSchema = new Schema({
         default: "Offline",
     },
 
-    meetingMembers: {
-        type: String,
-        default: null,
-    },
+    meetingMembers: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: false,
+        }
+    ],
 
     meetingDescription: {
         type: String,
