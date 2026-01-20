@@ -25,9 +25,16 @@ const meetingNoteSchema = new Schema({
 
     meetingMembers: [
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
-            required: false,
+            companyMember: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User",
+                required: false,
+            },
+
+            outsideMember: {
+                type: String,
+                default: null,
+            }
         }
     ],
 
