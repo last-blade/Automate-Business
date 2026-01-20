@@ -2,6 +2,10 @@ import { apiError, apiResponse, asyncHandler, MeetingNote } from "../allImports.
 
 const createMeetingNote = asyncHandler(async (request, response) => {
     const {meetingTitle, meetingDate, department, meetingMode, meetingMembers, meetingDescription} = request.body;
+console.log(meetingMembers)
+    if(!Array.isArray(meetingMembers)){
+        throw new apiError(400, "Meeting members should be in an array")
+    }
 
     if(!meetingTitle){
         throw new apiError(400, "Meeting title is required")
