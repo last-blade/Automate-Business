@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-import { apiError, apiResponse, asyncHandler, MeetingNote } from "../allImports.js";
+import meetingNoteCreatedEmail from "../../emails/meetingNoteEmails/meetingNoteCreatedEmail.js";
+import { apiError, apiResponse, asyncHandler, MeetingNote, User } from "../allImports.js";
 
 const createMeetingNote = asyncHandler(async (request, response) => {
     const {meetingTitle, meetingDate, department, meetingMode, meetingMembers, meetingDescription} = request.body;
@@ -47,6 +48,44 @@ console.log(meetingMembers)
         meetingDescription,
         meetingNoteCreatedBy: request.user?.id,
     });
+
+    for (const member of meetingMembers) {
+
+    // COMPANY MEMBER
+    if (member.companyMember) {
+
+        const user = await User.findById(member.companyMember)
+            .select("fullname email");
+
+        if (user?.email) {
+            await meetingNoteCreatedEmail({
+                receiverName: user.fullname,
+                receiverEmail: user.email,
+                meetingTitle,
+                meetingDate,
+                department,
+                meetingMode,
+                meetingDescription,
+                createdByName: request.user.fullname
+            });
+        }
+    }
+
+    // OUTSIDE MEMBER (ONLY IF EMAIL PROVIDED)
+    if (member.outsideMember && member.outsideMember.includes("@")) {
+        await meetingNoteCreatedEmail({
+            receiverName: member.outsideMember,
+            receiverEmail: member.outsideMember,
+            meetingTitle,
+            meetingDate,
+            department,
+            meetingMode,
+            meetingDescription,
+            createdByName: request.user.fullname
+        });
+    }
+}
+
 
     return response.status(201)
     .json(
