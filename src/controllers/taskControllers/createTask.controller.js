@@ -36,17 +36,62 @@ const createTask = asyncHandler(async (request, response) => {
     throw new apiError(400, "All required fields must be non-empty strings");
   }
 
+  // NEW: normalize assignees into an array ---
+  const normalizeAssignees = (value) => {
+    if (value === undefined || value === null) return [];
+    if (Array.isArray(value)) return value;
+
+    if (typeof value === "string") {
+      const trimmed = value.trim();
+      // handle JSON-stringified array: '["id1","id2"]'
+      if (trimmed.startsWith("[") && trimmed.endsWith("]")) {
+        try {
+          const parsed = JSON.parse(trimmed);
+          return Array.isArray(parsed) ? parsed : [parsed];
+        } catch {
+          return [value];
+        }
+      }
+      // single id string
+      return [trimmed];
+    }
+
+    // fallback: wrap anything else
+    return [value];
+  };
+
   if (isSelf) {
-    // Ignore whatever client sent ("" etc.)
-    taskAssignedTo = request.user.id;
+    // assign only to yourself
+    taskAssignedTo = [request.user.id];
   } else {
-    if (!mongoose.Types.ObjectId.isValid(taskAssignedTo)) {
-      throw new apiError(400, "taskAssignedTo must be a valid MongoDB ObjectId");
+    taskAssignedTo = normalizeAssignees(taskAssignedTo);
+
+    if (!taskAssignedTo.length) {
+      throw new apiError(400, "taskAssignedTo is required");
     }
-    const assignedUser = await User.findById(taskAssignedTo);
-    if (!assignedUser) {
-      throw new apiError(404, "Assigned user not found");
+
+    // validate ObjectIds
+    const invalidId = taskAssignedTo.find(
+      (id) => !mongoose.Types.ObjectId.isValid(id)
+    );
+    if (invalidId) {
+      throw new apiError(
+        400,
+        "taskAssignedTo must contain valid MongoDB ObjectId(s)"
+      );
     }
+
+    // ensure all users exist
+    const uniqueIds = [...new Set(taskAssignedTo.map((id) => id.toString()))];
+    const assignedUsers = await User.find({ _id: { $in: uniqueIds } }).select(
+      "_id"
+    );
+
+    if (assignedUsers.length !== uniqueIds.length) {
+      throw new apiError(404, "One or more assigned users not found");
+    }
+
+    taskAssignedTo = uniqueIds;
   }
 
   // Upload image if provided
@@ -83,34 +128,45 @@ const createTask = asyncHandler(async (request, response) => {
   const newTask = await Task.create(taskData);
 
   const createdTask = await Task.findById(newTask._id)
-    .populate("taskAssignedTo", "fullname email taskDueDate whatsappNumber")
+    .populate("taskAssignedTo", "fullname email whatsappNumber")
     .populate("taskCreatedBy", "fullname email");
 
   if (!createdTask) {
     throw new apiError(500, "Something went wrong while assigning task");
   }
 
-  const taskAssignedToUser = createdTask.taskAssignedTo;
+  // --- NEW: email + activity for each assignee ---
+  const assignees = Array.isArray(createdTask.taskAssignedTo)
+    ? createdTask.taskAssignedTo
+    : [];
 
-  await taskCreatedEmail({
-    taskTitle,
-    assigneeName: taskAssignedToUser.fullname,
-    assigneeEmail: taskAssignedToUser.email,
-    dueDate: taskDueDate,
-    taskDescription,
-    taskPriority,
-    taskCategory,
-    taskImage: createdTask.taskImage?.url,
-    phone: createdTask.taskAssignedTo?.whatsappNumber,
-  });
+  await Promise.all(
+    assignees.map((assignee) =>
+      taskCreatedEmail({
+        taskTitle,
+        assigneeName: assignee.fullname,
+        assigneeEmail: assignee.email,
+        dueDate: taskDueDate,
+        taskDescription,
+        taskPriority,
+        taskCategory,
+        taskImage: createdTask.taskImage?.url,
+        phone: assignee.whatsappNumber,
+      })
+    )
+  );
 
-  await Activity.create({
+  const activities = assignees.map((assignee) => ({
     messageType: "task_created",
     message: `${createdTask.taskCreatedBy.fullname} created task: ${createdTask.taskTitle}`,
     creatorName: createdTask.taskCreatedBy.fullname,
-    user: createdTask.taskAssignedTo._id,
+    user: assignee._id,
     task: createdTask._id,
-  });
+  }));
+
+  if (activities.length) {
+    await Activity.create(activities);
+  }
 
   return response
     .status(201)

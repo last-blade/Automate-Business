@@ -11,12 +11,14 @@ const taskSchema = new Schema({
         required: true,
     },
 
-    taskAssignedTo: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-        index: true,
-    },
+    taskAssignedTo: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true,
+            index: true,
+        }
+    ],
 
     taskCategory: {
         type: String,
