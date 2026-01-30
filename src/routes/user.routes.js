@@ -21,6 +21,7 @@ import { createMeetingNote } from "../controllers/userControllers/createMeetingN
 import { editMeetingNote } from "../controllers/userControllers/editMeetingNote.controller.js";
 import { deleteMeetingNote } from "../controllers/userControllers/deleteMeetingNote.controller.js";
 import { fetchMeetingNotes } from "../controllers/userControllers/fetchMeetingNotes.controller.js";
+import { viewMeetingNote } from "../controllers/userControllers/viewMeetingNote.controller.js";
 
 const router = Router();
 
@@ -41,6 +42,7 @@ router.route("/team-member/:userId").get(authMiddleware, fetchTeamMemberDetails)
 router.route("/search-team-member").get(authMiddleware, searchTeamMember);
 router.route("/activities").get(authMiddleware, getUserActivities);
 router.route("/meetingnotes").get(authMiddleware, fetchMeetingNotes);
+router.route("/meetingnote/:meetingNoteId").get(authMiddleware, viewMeetingNote);
 
 //DELETE
 router.route("/delete-member/:memberId").delete(authMiddleware, deleteMember);
