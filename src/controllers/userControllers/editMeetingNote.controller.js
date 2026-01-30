@@ -16,6 +16,10 @@ const editMeetingNote = asyncHandler(async (request, response) => {
         throw new apiError(400, "Meeting note id is required");
     }
 
+    if(!Array.isArray(meetingMembers)){
+        throw new apiError(400, "Meeting members should be in an array")
+    }
+
     const existingMeetingNote = await MeetingNote.findById(meetingNoteId);
 
     if (!existingMeetingNote) {
