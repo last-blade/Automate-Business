@@ -20,7 +20,7 @@ const editMeetingNote = asyncHandler(async (request, response) => {
         throw new apiError(400, "Meeting members should be in an array")
     }
 
-    const existingMeetingNote = await MeetingNote.findById(meetingNoteId);
+    const existingMeetingNote = await MeetingNote.findById(meetingNoteId).populate("meetingMembers.companyMember", "fullname email");
 
     if (!existingMeetingNote) {
         throw new apiError(404, "Meeting note not found");
